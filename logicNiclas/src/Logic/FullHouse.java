@@ -1,0 +1,17 @@
+package Logic;
+
+public class FullHouse extends Combos{
+
+	public FullHouse() {
+		super("FullHouse");
+	}
+
+	@Override
+	public void berechnePunkte() {
+		if(umgewandeltZuListe().contains(2) && umgewandeltZuListe().contains(3)) {
+			
+		}
+		
+		
+	}
+}
