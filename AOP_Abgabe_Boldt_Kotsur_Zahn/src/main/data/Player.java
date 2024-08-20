@@ -7,8 +7,9 @@ public class Player {
 	private int totalPointsSum;
 	private int[] scoreStats;
 	
-	public Player(String name) {
+	public Player(String name, int reihenFolgeNummer) {
 		this.name = name;
+		this.reihenFolgeNummer = reihenFolgeNummer;
 		this.totalPointsSum = 0;
 		this.scoreStats = new int[14];
 		Arrays.fill(scoreStats, -1);
@@ -46,5 +47,9 @@ public class Player {
 	//also hier noch die funktion
 	public void totalPointsAdd(int points) {
 		totalPointsSum += points;
+	}
+	
+	public int getReihenFolgeNummer() {
+		return reihenFolgeNummer;
 	}
 }

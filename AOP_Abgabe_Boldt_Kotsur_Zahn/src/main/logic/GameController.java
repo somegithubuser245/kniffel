@@ -7,13 +7,17 @@ public class GameController {
 	private int spielerAnzahl;
 	public boolean fertigGewurfelt;
 	
+	private boolean gameOver;
+	
 	private Player[] playerList;
 	private Combos[] ComboKlassen;
-	public String currentPlayer;
+	public Player currentPlayer;
 	//private int currentRound;
 	
 	public GameController(int spielerAnzahl) {
 		initGame(spielerAnzahl);
+		
+		this.gameOver = false;
 		
 		this.fertigGewurfelt = false;
 		
@@ -25,8 +29,11 @@ public class GameController {
 		playerList = new Player[this.spielerAnzahl];
 		
 		for(int i = 0; i < spielerAnzahl; i++) {
-			playerList[i] = new Player("test " + i);
+			//String name = gui.playerNameInput();
+			playerList[i] = new Player("test " + i, i);
 		}
+		
+		
 	}
 	
 	public void getSchowCombination() {
@@ -39,16 +46,34 @@ public class GameController {
 		//gui. ...
 	}
 	
-	private void gameOver() {
-		
+	public boolean gameOver() {
+		if(gameOver) {
+			//gui.ergebnisTabelle
+			return true;
+		}
+		return false;
+		//gui.ergebnisTabelle;
 	}
 	
 	private void nextPlayer() {
-		
+		int index = currentPlayer.getReihenFolgeNummer();
+		if(index > playerList.length - 1) {
+			currentPlayer = playerList[0]; //start again from the beginning
+		} else {
+			currentPlayer = playerList[index + 1];
+		}
+	}
+	
+	public void nextRound() {
+		nextPlayer();
+		fertigGewurfelt = false;
+		for()
 	}
 	
 	private void checkPlayerDone() {
-		
+		if (currentPlayer.getPlayerDone()) {
+			
+		}
 	}
 	
 	private void starteBerechnung() {
