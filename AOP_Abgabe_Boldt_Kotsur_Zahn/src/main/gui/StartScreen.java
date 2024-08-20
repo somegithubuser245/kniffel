@@ -6,9 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartScreen extends JFrame implements ActionListener {
-	int anzahlSpieler = 1;
+	public static int anzahlSpieler = 1;
 	String name1, name2, name3, name4, name5, name6;
-	int alter1, alter2, alter3, alter4, alter5, alter6;
+	//evtl für spieler reihenfolge nach alter?: int alter1, alter2, alter3, alter4, alter5, alter6;
 	
 	JPanel spielerMenu;
 	

@@ -10,8 +10,8 @@ public class GUI extends JFrame {
 	
 		    // Main-Methode zum Testen der GUI
 	    public static void main(String[] args) {
-	       // StartScreen startScreen = new StartScreen();
-	    	StartScreen startScreen = new StartScreen();
+	        // StartScreen startScreen = new StartScreen();
+	    	MainScreen mainScreen = new MainScreen();
 	        
 	    }
 	}

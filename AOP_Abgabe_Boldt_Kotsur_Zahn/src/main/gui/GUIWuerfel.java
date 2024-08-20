@@ -1,5 +1,6 @@
 package main.gui;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -8,14 +9,40 @@ import javax.swing.JButton;
 
 public class GUIWuerfel extends JButton {
     private int value;  // Der Wert des Würfels (1-6)
-
+    private boolean gehalten;
+    
     public GUIWuerfel(int value) {
         this.value = value;
+        
         setPreferredSize(new java.awt.Dimension(80, 80));  // Setze die Größe des Buttons
         setFocusPainted(false);  // Entferne den Fokus-Rahmen
         setContentAreaFilled(false);  // Entferne die Hintergrundfüllung
+        this.gehalten = false;
+        updateButton();
+        addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toggleGehalten();
+            }
+        });
     }
  
+    private void toggleGehalten() {
+        gehalten = !gehalten;
+        updateButton();
+    }
+    public boolean isGehalten() {
+        return gehalten;
+    }
+    private void updateButton() {
+        if (gehalten) {
+            setBackground(Color.GREEN); // Beispiel: Farbe für gehaltene Würfel
+        } else {
+            setBackground(Color.WHITE); // Farbe für nicht gehaltene Würfel
+        }
+        this.repaint();
+    }
+    
     @Override
     public Dimension getPreferredSize() {
         // Höhe und Breite gleichsetzen, basierend auf der aktuellen Höhe oder Breite
