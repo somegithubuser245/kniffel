@@ -52,13 +52,23 @@ public class Wuerfel {
 	
 	public static void starteComboChecker() {
 		//berchne Punkte von jeder KLasse muss aufgerufen werden
-		Zahlen.berechnePunkte();
-		DreierPash.berechnePunkte();
-		ViererPash.berechnePunkte();
-		FullHouse.berechnePunkte();
-		GrosseStrasse.berechnePunkte();
-		KleineStrasse.berechnePunkte();
-		Chance.berechnePunkte();
+		// Instanzen der Subklassen erstellen
+	    Combos zahlen = new Zahlen();
+	    Combos dreierPash = new DreierPash();
+	    Combos viererPash = new ViererPash();
+	    Combos fullHouse = new FullHouse();
+	    Combos grosseStrasse = new GrosseStrasse();
+	    Combos kleineStrasse = new KleineStrasse();
+	    Combos chance = new Chance();
+
+	    // berechnePunkte() für jede Instanz aufrufen
+	    zahlen.berechnePunkte();
+	    dreierPash.berechnePunkte();
+	    viererPash.berechnePunkte();
+	    fullHouse.berechnePunkte();
+	    grosseStrasse.berechnePunkte();
+	    kleineStrasse.berechnePunkte();
+	    chance.berechnePunkte();
 	}
 	
 	
