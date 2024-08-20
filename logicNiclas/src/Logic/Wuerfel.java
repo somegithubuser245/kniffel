@@ -21,34 +21,33 @@ public class Wuerfel {
 					wuerfelWerte[i] = new Random().nextInt(6)+1;
 				};
 			}
+			zaehleWerte();
 			ermittleAugenzahl();
 			starteComboChecker();
-			zaehleWerte();
 			wurfZahl++;
 		}
 		fertigGewuerfelt = true;
 	}
 	
 	//CountingSort Hilfarray
-	public static int[]zaehleWerte() {
-		int[] anzahlWerte = new int[7];// von 0 bis 6 --> 0 kann man nicht Würfeln deshalb [0] immer 0
+	public static void zaehleWerte() {
 		Arrays.fill(anzahlWerte,0);
 		
 		for(int i : wuerfelWerte) {
 			anzahlWerte[i] += 1;
 		}
-		
-		for(int i = 1; i < anzahlWerte.length;i++) {
-			anzahlWerte[i] += anzahlWerte[i -1];
-		}
-		
-		return anzahlWerte;
 	}
 	
 	public static void starteComboChecker() {
 		//berchne Punkte von jeder KLasse muss aufgerufen werden
 		// Instanzen der Subklassen erstellen
-	    Combos zahlen = new Zahlen();
+	    Combos einser = new Einser();
+	    Combos zweier = new Zweier();
+	    Combos dreier = new Dreier();
+	    Combos vierer = new Vierer();
+	    Combos fuenfer = new Fuenfer();
+	    Combos sechser = new Sechser();
+	    
 	    Combos dreierPash = new DreierPash();
 	    Combos viererPash = new ViererPash();
 	    Combos fullHouse = new FullHouse();
@@ -57,7 +56,13 @@ public class Wuerfel {
 	    Combos chance = new Chance();
 
 	    // berechnePunkte() für jede Instanz aufrufen
-	    zahlen.berechnePunkte();
+	    einser.berechnePunkte();
+	    zweier.berechnePunkte();
+	    dreier.berechnePunkte();
+	    vierer.berechnePunkte();
+	    fuenfer.berechnePunkte();
+	    sechser.berechnePunkte();
+	    
 	    dreierPash.berechnePunkte();
 	    viererPash.berechnePunkte();
 	    fullHouse.berechnePunkte();
