@@ -10,13 +10,12 @@ public class GameController {
 	private boolean gameOver;
 	
 	private Player[] playerList;
-	private Combos[] ComboKlassen;
+	private Combos[] comboKlassen;
 	public Player currentPlayer;
 	//private int currentRound;
 	
 	public GameController(int spielerAnzahl) {
 		initGame(spielerAnzahl);
-		
 		this.gameOver = false;
 		
 		this.fertigGewurfelt = false;
@@ -67,7 +66,6 @@ public class GameController {
 	public void nextRound() {
 		nextPlayer();
 		fertigGewurfelt = false;
-		for()
 	}
 	
 	private void checkPlayerDone() {
