@@ -6,10 +6,9 @@ public class Zahlen extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte(/*Playerinput*/) {											//darf ic das static machen???????????
-		// sonst kann contains nicht genutzt werden und das macht alles komplizierter
-		
-		int index = 1/*Playerinput*/;
+	public void berechnePunkte(/*Playerinput*/) {
+		// es müssen alle berechnet werden--> Neue Klassen erstellen 1er...
+		int index = 1/*Playerinput*/;				
 		
 		int ergebnis = index * Wuerfel.getAnzahlWerte()[index];
 		moeglicheComboPunkte.put(getComboName(), ergebnis);

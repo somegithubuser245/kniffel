@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Random; 
 
 public class Wuerfel {
-	private static int[] wuerfelWerte = new int[6];
-	private static int[]gehalteneWuerfel = new int[6];
+	private static int[] wuerfelWerte = new int[5];
+	private static boolean[]gehalteneWuerfel = new boolean[5];
 	private static int[]anzahlWerte = new int [7];// C_Feld
 	private static int wurfZahl = 0;
 	private static boolean fertigGewuerfelt;
@@ -13,17 +13,18 @@ public class Wuerfel {
 	
 	
 	public static void wurfeln() {
+		Arrays.fill(gehalteneWuerfel,false);// nur zu testzwecken
 		fertigGewuerfelt = false;
 		while(wurfZahl < 3) {
-			for(int i = 0;i < 6;i++) {
-				wuerfelWerte[i] = new Random().nextInt(6)+1;
-				zaehleWerte();
-				starteComboChecker();
-				wuerfelHalten();
+			for(int i = 0;i < 5;i++) {
+				if (!gehalteneWuerfel[i]) {
+					wuerfelWerte[i] = new Random().nextInt(6)+1;
+				};
 			}
-			
+			ermittleAugenzahl();
+			starteComboChecker();
+			zaehleWerte();
 			wurfZahl++;
-			augenZahl = 0;
 		}
 		fertigGewuerfelt = true;
 	}
@@ -42,12 +43,6 @@ public class Wuerfel {
 		}
 		
 		return anzahlWerte;
-	}
-	
-	public static int[] wuerfelHalten() {
-		//Würfel, die gehalten werden sollen, werden über GUI ausgewählt
-		
-		return gehalteneWuerfel;
 	}
 	
 	public static void starteComboChecker() {
@@ -76,9 +71,10 @@ public class Wuerfel {
 	
 	
 	//Getter/Setter
-	public static int ermittleAugenzahl(int[]wuerfelWerte) {
+	public static int ermittleAugenzahl() {
+		augenZahl = 0;
 		for(int i : wuerfelWerte) {
-			augenZahl += wuerfelWerte[i];
+			augenZahl += i;
 		}
 		return augenZahl;
 	}
@@ -88,14 +84,6 @@ public class Wuerfel {
 
 	public static void setWuerfelWerte(int[] wuerfelWerte) {
 		Wuerfel.wuerfelWerte = wuerfelWerte;
-	}
-
-	public static int[] getGehalteneWuerfel() {
-		return gehalteneWuerfel;
-	}
-
-	public static void setGehalteneWuerfel(int[] gehalteneWuerfel) {
-		Wuerfel.gehalteneWuerfel = gehalteneWuerfel;
 	}
 
 	public static int[] getAnzahlWerte() {
@@ -122,11 +110,11 @@ public class Wuerfel {
 		Wuerfel.fertigGewuerfelt = fertigGewuerfelt;
 	}
 
-	public static int getAugenZahl() {
+	public static int getAugenzahl() {
 		return augenZahl;
 	}
 
-	public static void setAugenZahl(int augenZahl) {
+	public static void setAugenzahl(int augenZahl) {
 		Wuerfel.augenZahl = augenZahl;
 	}
 	
