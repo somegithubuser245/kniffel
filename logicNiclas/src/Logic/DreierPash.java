@@ -8,13 +8,12 @@ public class DreierPash extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
-		//wenn eine Zahl mind. 3x Vorkommt
+	public void berechnePunkte() { 
+		//wenn eine Zahl mind. 3x Vorkommt--> Punkte an Map übergeben ,sonst Punkte = 0 gesetzt
 		if(umgewandeltZuListe().contains(3)|| umgewandeltZuListe().contains(4) || umgewandeltZuListe().contains(5)||umgewandeltZuListe().contains(6)) {
 			int ergebnis =Wuerfel.ermittleAugenzahl(Wuerfel.getAnzahlWerte());
 			moeglicheComboPunkte.put(getComboName(), ergebnis);
 		}
 		else moeglicheComboPunkte.put(getComboName(), 0);
 	}
-	
 }

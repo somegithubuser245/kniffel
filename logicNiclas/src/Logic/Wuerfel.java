@@ -4,21 +4,22 @@ import java.util.Arrays;
 import java.util.Random; 
 
 public class Wuerfel {
-	private static int[] wuerfelWerte;
-	private static int[]gehalteneWuerfel;
-	private static int[]anzahlWerte;// C_Feld
+	private static int[] wuerfelWerte = new int[6];
+	private static int[]gehalteneWuerfel = new int[6];
+	private static int[]anzahlWerte = new int [7];// C_Feld
 	private static int wurfZahl = 0;
-	private static boolean fertigGewuerfelt = false;
+	private static boolean fertigGewuerfelt;
 	private static int augenZahl = 0;
 	
 	
 	public static void wurfeln() {
+		fertigGewuerfelt = false;
 		while(wurfZahl < 3) {
-			for(int i = 0;i < 5;i++) {
+			for(int i = 0;i < 6;i++) {
 				wuerfelWerte[i] = new Random().nextInt(6)+1;
+				zaehleWerte();
 				starteComboChecker();
 				wuerfelHalten();
-				
 			}
 			
 			wurfZahl++;
@@ -28,7 +29,7 @@ public class Wuerfel {
 	}
 	
 	//CountingSort Hilfarray
-	public static int[]zaehleWerte(int[]wuerfelWerte) {
+	public static int[]zaehleWerte() {
 		int[] anzahlWerte = new int[7];// von 0 bis 6 --> 0 kann man nicht Würfeln deshalb [0] immer 0
 		Arrays.fill(anzahlWerte,0);
 		
@@ -50,7 +51,14 @@ public class Wuerfel {
 	}
 	
 	public static void starteComboChecker() {
-		
+		//berchne Punkte von jeder KLasse muss aufgerufen werden
+		Zahlen.berechnePunkte();
+		DreierPash.berechnePunkte();
+		ViererPash.berechnePunkte();
+		FullHouse.berechnePunkte();
+		GrosseStrasse.berechnePunkte();
+		KleineStrasse.berechnePunkte();
+		Chance.berechnePunkte();
 	}
 	
 	

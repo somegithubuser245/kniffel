@@ -8,8 +8,8 @@ public class Chance extends Combos{
 
 	@Override
 	public void berechnePunkte() {
-		// TODO Auto-generated method stub
-		
+		int ergebnis = Wuerfel.ermittleAugenzahl(Wuerfel.getAnzahlWerte());
+		moeglicheComboPunkte.put(getComboName(), ergebnis);
 	}
 	
 }

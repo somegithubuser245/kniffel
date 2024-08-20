@@ -9,7 +9,7 @@ import java.util.Map;
 public abstract class Combos {
 
 	private String comboName;
-	protected static Map<String, Integer>moeglicheComboPunkte= new HashMap<>();;
+	protected static Map<String, Integer>moeglicheComboPunkte = new HashMap<>();;
 	private int punkteWert = 0;
 	
 	//Konstruktor generiert HashMap mit Key = KlassenName und Value = PunktZahl, wenn man die jeweilige Kombination wählen sollte
@@ -21,15 +21,6 @@ public abstract class Combos {
 	}
 	
 	
-	
-		
-	//Generiert Array welcher an GUI weitergegeben wird in dem alle möglichen Kombinationen enhalten sind --------> brauche ich glaube ich nicht mehr????--_> nimmt punkteWerte un aktuallisiert diese in der Map
-	public static Map<String, Integer>generiereArray() {
-		
-		
-		
-		return moeglicheComboPunkte;
-	}
 	
 	
 	public static List<Integer> umgewandeltZuListe(){
@@ -56,11 +47,11 @@ public abstract class Combos {
 		this.comboName = comboName;
 	}
 
-	public Map<String, Integer> getMoeglicheComboPunkte() {
+	public static Map<String, Integer> getMoeglicheComboPunkte() {
 		return moeglicheComboPunkte;
 	}
 
-	public void setMoeglicheComboPunkte(Map<String, Integer> moeglicheCombosPunkte) {
+	public void setMoeglicheComboPunkte(Map<String, Integer> moeglicheComboPunkte) {
 		this.moeglicheComboPunkte = moeglicheComboPunkte;
 	}
 	public int getPunkteWert() {
