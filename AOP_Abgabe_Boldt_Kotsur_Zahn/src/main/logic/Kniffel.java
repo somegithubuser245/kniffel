@@ -1,4 +1,6 @@
-package Logic;
+package main.logic;
+
+import main.logic.combos.Combos;
 
 public class Kniffel extends Combos{
 

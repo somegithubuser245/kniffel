@@ -1,14 +1,16 @@
-package Logic;
+package main.logic.combos;
 
-public class Fuenfer extends Combos {
+import main.logic.Wuerfel;
 
-	public Fuenfer() {
-		super("Fuenfer");
+public class Zweier extends Combos {
+
+	public Zweier() {
+		super("Zweier");
 	}
 
 	@Override
 	public void berechnePunkte() {
-		int index = 5;				
+		int index = 2;				
 		
 		int ergebnis = index * Wuerfel.getAnzahlWerte()[index];
 		moeglicheComboPunkte.put(getComboName(), ergebnis);

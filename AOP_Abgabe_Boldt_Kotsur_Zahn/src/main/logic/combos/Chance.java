@@ -1,4 +1,6 @@
-package Logic;
+package main.logic.combos;
+
+import main.logic.Wuerfel;
 
 public class Chance extends Combos{
 

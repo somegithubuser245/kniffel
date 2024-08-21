@@ -1,4 +1,4 @@
-package Logic;
+package main.logic.combos;
 
 public class FullHouse extends Combos{
 

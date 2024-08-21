@@ -410,24 +410,24 @@ public class MainScreen extends JFrame {
 
 		private static final long serialVersionUID = 1L;
 
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-			JLabel l = new JLAbel
-			JButton
-			// Überprüfe, ob der Zellenwert ein String ist
-			if (value instanceof String) {
-
-				//hier ist riesen baustelle!!! kp was hier abgeht
-				//wie kann ich mehrere verschiedene zellen je nach array/row usw ausgeben
-				//am besten verschiedene types nehmen: jbutton oder Jlabel jenachdem was gebraucht ist
-				
-				//	if ("Name: ".equals(combo) || "Summe".equals(combo) || "Bonus (ab 63)".equals(combo)
-							|| "Oben Gesamt".equals(combo) || "Unten Gesamt".equals(combo)
-							|| "Gesamtpunkte".equals(combo)) {
-					
-			
-		}
+//		@Override
+//		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//				int row, int column) {
+//			JLabel l = new JLAbel
+//			JButton
+//			// Überprüfe, ob der Zellenwert ein String ist
+//			if (value instanceof String) {
+//
+//				//hier ist riesen baustelle!!! kp was hier abgeht
+//				//wie kann ich mehrere verschiedene zellen je nach array/row usw ausgeben
+//				//am besten verschiedene types nehmen: jbutton oder Jlabel jenachdem was gebraucht ist
+//				
+//				//	if ("Name: ".equals(combo) || "Summe".equals(combo) || "Bonus (ab 63)".equals(combo)
+//							|| "Oben Gesamt".equals(combo) || "Unten Gesamt".equals(combo)
+//							|| "Gesamtpunkte".equals(combo)) {
+//					
+//			
+//		}
 	}
 
 	public class CustomTableModel extends DefaultTableModel {
