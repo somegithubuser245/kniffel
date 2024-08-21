@@ -8,8 +8,7 @@ public class Kniffel extends Combos{
 
 	@Override
 	public void berechnePunkte() {
-		int[]kniffel = {0,1,1,1,1,1,1};
-		if(Wuerfel.getAnzahlWerte() == kniffel) {
+		if(umgewandeltZuListe().contains(5)) {
 			moeglicheComboPunkte.put(getComboName(), 30);
 		}
 		else moeglicheComboPunkte.put(getComboName(), 0);
