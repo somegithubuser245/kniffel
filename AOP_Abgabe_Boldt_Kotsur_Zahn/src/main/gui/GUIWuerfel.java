@@ -10,73 +10,53 @@ import javax.swing.JButton;
 public class GUIWuerfel extends JButton {
     private int value;  // Der Wert des Würfels (1-6)
     private boolean gehalten;
-    
-    public GUIWuerfel(int value) {
-        this.value = value;
-        
-        setPreferredSize(new java.awt.Dimension(80, 80));  // Setze die Größe des Buttons
-        setFocusPainted(false);  // Entferne den Fokus-Rahmen
-        setContentAreaFilled(false);  // Entferne die Hintergrundfüllung
-        this.gehalten = false;
-        updateButton();
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                toggleGehalten();
-            }
-        });
-    }
- 
-    private void toggleGehalten() {
-        gehalten = !gehalten;
-        updateButton();
-    }
-    public boolean isGehalten() {
-        return gehalten;
-    }
-    private void updateButton() {
-        if (gehalten) {
-            setBackground(Color.GREEN); // Beispiel: Farbe für gehaltene Würfel
-        } else {
-            setBackground(Color.WHITE); // Farbe für nicht gehaltene Würfel
-        }
-        this.repaint();
-    }
-    
-    @Override
-    public Dimension getPreferredSize() {
-        // Höhe und Breite gleichsetzen, basierend auf der aktuellen Höhe oder Breite
-        Dimension size = super.getPreferredSize();
-        int dimension = Math.max(size.width, size.height);
-        return new Dimension(dimension, dimension);
-    }
 
-	public void setValue(int value) {
-        this.value = value;
-        repaint();  // Neu zeichnen, wenn sich der Wert ändert
-    }
+    	    public GUIWuerfel(int value) {
+    	        this.value = value;
+    	        this.gehalten = false;
+    	        this.setOpaque(true);
+    	        this.getPreferredSize();
+    	        updateDisplay();
 
-    public int getValue() {
-        return value;
-    }
+    	        // Add action listener to handle hold/unhold on click
+    	        this.addActionListener(e -> halteWuerfel());
+    	    }
+    	   
+    	    @Override
+    	    public Dimension getPreferredSize() {
+    	        // Calculate and return the preferred size
+    	        return new Dimension(100, 100); // Example dimensions
+    	    }
+    	    
+    	    // Toggle the hold state of the dice
+    	    private void halteWuerfel() {
+    	        gehalten = !gehalten;
+    	        updateDisplay();
+    	    }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Zeichne den Würfel (ein einfaches Quadrat)
-        g.setColor(Color.WHITE);
-        g.fillRect(10, 10, 60, 60);  // Zeichne das Quadrat (Würfel)
+    	    // Update the button text and color based on the current state
+    	    private void updateDisplay() {
+    	        this.setText(String.valueOf(value));
+    	        if (gehalten) {
+    	            this.setBackground(Color.RED); // Held dice color
+    	        } else {
+    	            this.setBackground(Color.LIGHT_GRAY); // Default dice color
+    	        }
+    	    }
 
-        g.setColor(Color.BLACK);
-        g.drawRect(10, 10, 60, 60);  // Zeichne den Rand des Würfels
+    	    // Roll the dice only if it's not held
+    	    public void wuerfeln(int v) {
+    	        if (!gehalten) {
+    	            value = v;
+    	            updateDisplay();
+    	        }
+    	    }
 
-        // Setze den Font für die Augenzahl
-        g.setFont(new Font("Arial", Font.BOLD, 40));
+    	    public boolean gehalten() {
+    	        return gehalten;
+    	    }
 
-        // Zeichne die Augenzahl in der Mitte des Würfels
-        String text = String.valueOf(value);
-        int textWidth = g.getFontMetrics().stringWidth(text);
-        int textHeight = g.getFontMetrics().getAscent();
-        g.drawString(text, 40 - textWidth / 2, 50 + textHeight / 4);
-    }
-}
+    	    public int getValue() {
+    	        return value;
+    	    }
+    	}
