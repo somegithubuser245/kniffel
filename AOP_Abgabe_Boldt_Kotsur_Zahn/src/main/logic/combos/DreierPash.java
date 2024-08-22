@@ -1,5 +1,6 @@
 package main.logic.combos;
 
+import main.logic.Combos;
 import main.logic.Wuerfel;
 
 public class DreierPash extends Combos{

@@ -3,19 +3,7 @@ package main.logic;
 import java.util.Arrays;
 import java.util.Random;
 
-import main.logic.combos.Chance;
-import main.logic.combos.Combos;
-import main.logic.combos.Dreier;
-import main.logic.combos.DreierPash;
-import main.logic.combos.Einser;
-import main.logic.combos.Fuenfer;
-import main.logic.combos.FullHouse;
-import main.logic.combos.GrosseStrasse;
-import main.logic.combos.KleineStrasse;
-import main.logic.combos.Sechser;
-import main.logic.combos.Vierer;
-import main.logic.combos.ViererPash;
-import main.logic.combos.Zweier; 
+import main.logic.combos.*;
 
 public class Wuerfel {
 	private static int[] wuerfelWerte = new int[5];
@@ -27,20 +15,18 @@ public class Wuerfel {
 	
 	
 	public static void wurfeln() {
-		Arrays.fill(gehalteneWuerfel,false);// nur zu testzwecken
-		fertigGewuerfelt = false;
-		while(wurfZahl < 3) {
-			for(int i = 0;i < 5;i++) {
-				if (!gehalteneWuerfel[i]) {
-					wuerfelWerte[i] = new Random().nextInt(6)+1;
-				};
-			}
-			zaehleWerte();
-			ermittleAugenzahl();
-			starteComboChecker();
-			wurfZahl++;
+		
+		for(int i = 0;i < 5;i++) {
+			if (!gehalteneWuerfel[i]) {
+				wuerfelWerte[i] = new Random().nextInt(6)+1;
+			};
 		}
-		fertigGewuerfelt = true;
+		zaehleWerte();
+		ermittleAugenzahl();
+		starteComboChecker();
+		
+		wurfZahl += 1;
+		Arrays.fill(gehalteneWuerfel, false);
 	}
 	
 	//CountingSort Hilfarray
@@ -68,6 +54,7 @@ public class Wuerfel {
 	    Combos grosseStrasse = new GrosseStrasse();
 	    Combos kleineStrasse = new KleineStrasse();
 	    Combos chance = new Chance();
+	    Combos kniffel = new Kniffel();
 
 	    // berechnePunkte() für jede Instanz aufrufen
 	    einser.berechnePunkte();
@@ -82,6 +69,7 @@ public class Wuerfel {
 	    fullHouse.berechnePunkte();
 	    grosseStrasse.berechnePunkte();
 	    kleineStrasse.berechnePunkte();
+	    kniffel.berechnePunkte();
 	    chance.berechnePunkte();
 	}
 	
@@ -103,6 +91,13 @@ public class Wuerfel {
 
 	public static void setWuerfelWerte(int[] wuerfelWerte) {
 		Wuerfel.wuerfelWerte = wuerfelWerte;
+	}
+	
+	public static void setGehalteneWuerfel(int[] fertigGewuerfelt) {
+		for(int i = 0; i < fertigGewuerfelt.length; i++) {
+			int index = fertigGewuerfelt[i];
+			Wuerfel.gehalteneWuerfel[index] = true;
+		}
 	}
 
 	public static int[] getAnzahlWerte() {

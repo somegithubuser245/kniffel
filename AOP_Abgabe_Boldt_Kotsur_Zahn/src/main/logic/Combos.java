@@ -1,10 +1,9 @@
-package main.logic.combos;
+package main.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import main.logic.*;
 
 public abstract class Combos {
 

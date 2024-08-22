@@ -6,21 +6,19 @@ public class Player {
 	private int reihenFolgeNummer;
 	private int totalPointsSum;
 	private int[] scoreStats;
+	private boolean isDone;
 	
 	public Player(String name, int reihenFolgeNummer) {
 		this.name = name;
 		this.reihenFolgeNummer = reihenFolgeNummer;
+		this.isDone = false;
 		this.totalPointsSum = 0;
 		this.scoreStats = new int[14];
 		Arrays.fill(scoreStats, -1);
 	}
 	
 	public boolean getPlayerDone() {
-		for(int i = 0; i < scoreStats.length; i++) {
-			if (scoreStats[i] == -1) return false;
-		}
-		
-		return true;
+		return isDone;
 	}
 	
 	public int[] getScoreStats() {
@@ -51,5 +49,9 @@ public class Player {
 	
 	public int getReihenFolgeNummer() {
 		return reihenFolgeNummer;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

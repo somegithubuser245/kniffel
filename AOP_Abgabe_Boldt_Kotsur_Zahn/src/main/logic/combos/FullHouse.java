@@ -1,5 +1,7 @@
 package main.logic.combos;
 
+import main.logic.Combos;
+
 public class FullHouse extends Combos{
 
 	public FullHouse() {
