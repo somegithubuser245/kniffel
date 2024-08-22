@@ -25,6 +25,7 @@ public class GameController {
 		this.gameOver = false;
 		this.fertigGewurfelt = false; 
 		
+		//TODO rebuild to give an array of players
 		this.spielerAnzahl = ui.chooseNumberOfPlayers();
 		playerList = new Player[this.spielerAnzahl];
 		
