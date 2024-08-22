@@ -17,13 +17,14 @@ public class GameController {
 	
 	public GameController() {
 		ui = new UI();
-		
-		this.gameOver = false;
-		this.fertigGewurfelt = false;
 		initGame();
 	}
 	
 	private void initGame() { //updates die spielerAnzahl und sets playerList Groesse
+		//default bools to set new game up
+		this.gameOver = false;
+		this.fertigGewurfelt = false; 
+		
 		this.spielerAnzahl = ui.chooseNumberOfPlayers();
 		playerList = new Player[this.spielerAnzahl];
 		
