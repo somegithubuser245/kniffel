@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public abstract class Combos {
 
 	private String comboName;
-	protected static Map<String, Integer>moeglicheComboPunkte = new HashMap<>();;
+	protected static Map<String, Integer>moeglicheComboPunkte = new HashMap<>();
 	private int punkteWert = 0;
 	
 	//Konstruktor generiert HashMap mit Key = KlassenName und Value = PunktZahl, wenn man die jeweilige Kombination wählen sollte
@@ -20,9 +19,7 @@ public abstract class Combos {
 		moeglicheComboPunkte.put(comboName,punkteWert);
 	}
 	
-	
-	
-	
+
 	public static List<Integer> umgewandeltZuListe(){
 		List<Integer> zuListe = new ArrayList<>();
 		
@@ -32,12 +29,9 @@ public abstract class Combos {
 		return zuListe;
 	}
 
-	
-	
 	public abstract void berechnePunkte();
 	
-	
-	
+		
 	//Getter/Setter
 	public String getComboName() {
 		return comboName;
