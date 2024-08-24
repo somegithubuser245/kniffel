@@ -55,22 +55,29 @@ public class Wuerfel {
 	    Combos kleineStrasse = new KleineStrasse();
 	    Combos chance = new Chance();
 	    Combos kniffel = new Kniffel();
-
-	    // berechnePunkte() für jede Instanz aufrufen
-	    einser.berechnePunkte();
-	    zweier.berechnePunkte();
-	    dreier.berechnePunkte();
-	    vierer.berechnePunkte();
-	    fuenfer.berechnePunkte();
-	    sechser.berechnePunkte();
 	    
-	    dreierPash.berechnePunkte();
-	    viererPash.berechnePunkte();
-	    fullHouse.berechnePunkte();
-	    grosseStrasse.berechnePunkte();
-	    kleineStrasse.berechnePunkte();
-	    kniffel.berechnePunkte();
-	    chance.berechnePunkte();
+	    Combos[] combosAsArray = {einser, zweier, dreier, vierer, fuenfer, sechser, dreierPash, viererPash, fullHouse, grosseStrasse, 
+	    		kleineStrasse, chance, kniffel};
+	    
+	    for (Combos combo : combosAsArray) {
+	    	combo.berechnePunkte();
+	    }
+
+////	     berechnePunkte() für jede Instanz aufrufen
+//	    einser.berechnePunkte();
+//	    zweier.berechnePunkte();
+//	    dreier.berechnePunkte();
+//	    vierer.berechnePunkte();
+//	    fuenfer.berechnePunkte();
+//	    sechser.berechnePunkte();
+//	    
+//	    dreierPash.berechnePunkte();
+//	    viererPash.berechnePunkte();
+//	    fullHouse.berechnePunkte();
+//	    grosseStrasse.berechnePunkte();
+//	    kleineStrasse.berechnePunkte();
+//	    kniffel.berechnePunkte();
+//	    chance.berechnePunkte();
 	}
 	
 	

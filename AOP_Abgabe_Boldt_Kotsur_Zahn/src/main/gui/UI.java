@@ -1,6 +1,5 @@
 package main.gui;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -26,10 +25,10 @@ public class UI {
     }
 
     public void outputData(int[] data) {
-    	System.out.print("Current player: " + currentPlayerName + "\n");
-        System.out.print("Wuerfel: ");
-        for (int value : data) {
-            System.out.print(value + " ");
+    	System.out.print("Current player: " + currentPlayerName + "\n\n");
+        System.out.println("Wuerfel: ");
+        for (int i = 0; i < data.length; i++) {
+            System.out.println(i + ". : " + data[i]);
         }
         System.out.println();
     }
@@ -52,10 +51,13 @@ public class UI {
 
     public void outputPossibleCombinations(Map<String, Integer> moeglicheComboPunkte) {
         System.out.println("\nPossible combinations:");
+        int i = 1;
         for (String key : moeglicheComboPunkte.keySet()) {
-            System.out.print(key + ": " + moeglicheComboPunkte.get(key) + "  ");
+            System.out.print(i + ". " + key + ": " + moeglicheComboPunkte.get(key) + "  ");
+            i++;
         }
-        System.out.print("\n");
+        
+        System.out.println("\n");
     }
 
     public boolean nextRandom() {

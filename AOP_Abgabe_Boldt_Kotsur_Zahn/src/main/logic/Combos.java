@@ -1,14 +1,14 @@
 package main.logic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Combos {
 
 	private String comboName;
-	protected static Map<String, Integer>moeglicheComboPunkte = new HashMap<>();;
+	protected static Map<String, Integer>moeglicheComboPunkte = new LinkedHashMap<>();
 	private int punkteWert = 0;
 	
 	//Konstruktor generiert HashMap mit Key = KlassenName und Value = PunktZahl, wenn man die jeweilige Kombination wählen sollte
