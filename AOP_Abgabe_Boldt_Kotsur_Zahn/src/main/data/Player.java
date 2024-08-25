@@ -30,7 +30,7 @@ public class Player {
 //	}
 	
 	public boolean getPlayerDone() {
-		return anzahlGestrichen == 12;
+		return anzahlGestrichen == 13;
 	}
 	
 	public int[] getScoreStats() {
