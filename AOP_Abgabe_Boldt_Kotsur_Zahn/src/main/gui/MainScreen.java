@@ -48,6 +48,7 @@ public class MainScreen extends JFrame {
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
+	//TODO punkteAnzeige = punkteTabelle.getPunkteAnzeige
 	public static int[][] punkteBerechnet = { { 115, 115, 115, 115, 115, 115 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
@@ -56,8 +57,8 @@ public class MainScreen extends JFrame {
 			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 0, 15, 15, 15, 15 } };
-
-	// punkteReal[21][6] und punkteAnzeige[21][6] (länge der arrays in den brackets)
+	//TODO punkteReal = punkteTabelle.getPunkteReal
+	// punkteReal[6][21] und punkteAnzeige[6][21] (länge der arrays in den brackets)
 
 	public static int[][] punkteReal = { { 10, 15, 0, 0, 0, 1000 }, { -1, -1, -1, -1, -1, -1 },
 			{ -1, -1, -1, -1, -1, -1 }, { 15, -1, -1, 0, -1, -1 }, { -1, -1, -1, -1, -1, -1 },
