@@ -43,7 +43,9 @@ public class GUIWuerfel extends JButton {
     	            this.setBackground(Color.LIGHT_GRAY); // Default dice color
     	        }
     	    }
-
+    	    //TODO augen als graphic anzeigen??
+    	    
+    	    
     	    // Roll the dice only if it's not held
     	    public void wuerfeln(int v) {
     	        if (!gehalten) {

@@ -20,7 +20,7 @@ import java.awt.*;
  *		TODO je nach punkteReal müssen zellen andere Farben haben und andere 
  *TODO auf spielerAnzahl reagieren (weniger spalten)
  *TODO arrays auf [spielerAnzahl][21] ändern!
- *TODO fertig knopf muss neue MainScreen Instanz startne @dani
+ *TODO fertig knopf muss neue MainScreen Instanz starten @dani
 */
 public class MainScreen extends JFrame {
 
@@ -34,13 +34,19 @@ public class MainScreen extends JFrame {
 																						// auswahl
 	public static int anzahlWuerfe = 0;
 	public static int anzahlSpieler = 6; // wird in StartScreen gewählt und übergeben : für dani
+					//TODO				= GameController.getSpielerAnzahl();
+	
 	public int currentPlayer = 1; // 0-5 für 6 spieler , muss von GameController gesetzt werden (und in GUI
 									// aktiviert) : dani
-
+				//TODO		= GameController.getCurrentPlayer();
+	
+	
 	// wird in gui gesetzt und muss in die spieler instanzen
 
 	public static String[] spielerNamen = { "david", "niclas", "dani", "tobias", "lordi", "nora" };
-
+				//TODO					= GameController.getSpielerNamen();
+	
+	
 	// punkteAnzeige Mischung aus *Berechnet und *Real -> von Dani (und Niclas)
 	public static int[][] punkteAnzeige = { { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
 			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
@@ -57,7 +63,7 @@ public class MainScreen extends JFrame {
 			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
 			{ 15, 0, 15, 15, 15, 15 } };
-	//TODO punkteReal = punkteTabelle.getPunkteReal
+	//TODO punkteBerechnet = punkteTabelle.getPunkteBerechnet
 	// punkteReal[6][21] und punkteAnzeige[6][21] (länge der arrays in den brackets)
 
 	public static int[][] punkteReal = { { 10, 15, 0, 0, 0, 1000 }, { -1, -1, -1, -1, -1, -1 },
@@ -68,7 +74,10 @@ public class MainScreen extends JFrame {
 			{ -1, -1, 16, -1, -1, -1 }, { -1, 4, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, 10 },
 			{ -1, -1, -1, -1, 16, -1 }, { -1, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 },
 			{ -1, -1, -1, -1, -1, -1 } };
+	//TODO punkteReal = punkteTabelle.getPunkteReal
 
+	
+	
 	// data für die anzeigeTabelle, muss nicht(!) geändert werden, liest dynamisch
 	// die Werte aus punkteAnzeige als String ein!!!
 	private static String[][] data;
@@ -151,29 +160,36 @@ public class MainScreen extends JFrame {
 		// TODO set würfel text mit array
 		// TODO set würfel gehalten + farbe über eventlistener und ändere array
 
+		// Hinweis, wie oft gewürfelt wurde
+		JLabel hinweisWurfZahl = new JLabel("");
+		
 		// Würfeln Knopf
 		wuerfeln = new JButton("Würfeln");
 		wuerfeln.setPreferredSize(new Dimension(300, 50));
 		wuerfeln.addActionListener(e -> {
 			JLabel hinweis1 = new JLabel("    Klicke Würfel");
 			JLabel hinweis2 = new JLabel("zum Halten!");
-			JLabel hinweisWurfZahl = new JLabel("" + (anzahlWuerfe + 1));
+			
 			if (anzahlWuerfe == 0) {
 				dicePanel.add(hinweis1);
 				dicePanel.add(hinweis2);
 			}
 			wuerfeln();
-			if (anzahlWuerfe > 1) {
-				dicePanel.remove(hinweisWurfZahl);
+			if (anzahlWuerfe == 1) {				
 				dicePanel.add(hinweisWurfZahl);
-			} else if (anzahlWuerfe == 1) {
-				dicePanel.add(hinweisWurfZahl);
+				hinweisWurfZahl.setText(""+anzahlWuerfe+". Wurf");
+				
+				
+			} else if (anzahlWuerfe > 1) {
+				hinweisWurfZahl.setText(""+anzahlWuerfe+". Wurf");
 			}
-
 			if (anzahlWuerfe == 3) {
 				wuerfeln.setBackground(Color.GRAY);
 				wuerfeln.setEnabled(false);
+				hinweisWurfZahl.setText("Wähle Kombo");
 			}
+			dicePanel.repaint();
+			dicePanel.revalidate();
 			leftPanel.revalidate(); // Layout wird neu berechnet
 			leftPanel.repaint(); // Panel wird neu gezeichnet
 
