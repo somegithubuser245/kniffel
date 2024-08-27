@@ -11,13 +11,21 @@ public class KleineStrasse extends Combos{
 
 	@Override
 	public void berechnePunkte() {
-		int[]KleineStrasse1 = {0,1,1,1,1,0,0};
-		int[]KleineStrasse2 = {0,0,1,1,1,1,0};
-		int[]KleineStrasse3 = {0,0,0,1,1,1,1};
-		if((Wuerfel.getAnzahlWerte()== KleineStrasse1) || (Wuerfel.getAnzahlWerte()== KleineStrasse2) || (Wuerfel.getAnzahlWerte()== KleineStrasse3)) {
-			moeglicheComboPunkte.put(getComboName(), 30);
-		}
-		else moeglicheComboPunkte.put(getComboName(), 0);
+		
+		int counter = 0;		
+
+		    for (int i = 1; i <= 6; i++) { 
+		        if (Wuerfel.getAnzahlWerte()[i] > 0) { 
+		            counter++;
+		            if (counter >= 4) {     // Wenn vier aufeinanderfolgende Zahlen vorhanden sind
+		                moeglicheComboPunkte.put(getComboName(), 30);
+		                return;
+		            }
+		        } else {
+		            counter = 0;  // Wenn eine Zahl nicht vorhanden ist, setze den Counter zurück
+		        }
+		    }
+		    moeglicheComboPunkte.put(getComboName(), 0);
 	}
 
 }

@@ -8,12 +8,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		GameController game = new GameController();
-		
-		int i = 0;
-		while(i < 100) {
-			game.mainGameState();
-			i++;
-		}
 //		Wuerfel.wurfeln();
 //		for(int i = 0;i < Wuerfel.getWuerfelWerte().length;i++) {
 //			System.out.println(Wuerfel.getWuerfelWerte()[i]);

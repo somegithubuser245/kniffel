@@ -95,16 +95,12 @@ public class Wuerfel {
 	public static int[] getWuerfelWerte() {
 		return wuerfelWerte;
 	}
-
 	public static void setWuerfelWerte(int[] wuerfelWerte) {
 		Wuerfel.wuerfelWerte = wuerfelWerte;
 	}
 	
-	public static void setGehalteneWuerfel(int[] fertigGewuerfelt) {
-		for(int i = 0; i < fertigGewuerfelt.length; i++) {
-			int index = fertigGewuerfelt[i];
-			Wuerfel.gehalteneWuerfel[index] = true;
-		}
+	public static void setGehalteneWuerfel(boolean[] gehalteneWuerfel) {
+		Wuerfel.gehalteneWuerfel = gehalteneWuerfel;
 	}
 
 	public static int[] getAnzahlWerte() {

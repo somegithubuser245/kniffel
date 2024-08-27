@@ -9,27 +9,22 @@ public class PunkteTabelle {
 	private static int[] punkteRealSingle;
 	private static int[] punkteAnzeigeSingle;
 	private static Player currentPlayer;
+	private static int spielerAnzahl;
 	
-	public PunkteTabelle(int spielerAnzahl, Player currentPlayer) {
-		PunkteTabelle.currentPlayer = currentPlayer;
-		punkteBerechnet = new int[13];
-		punkteReal = new int [6][21]; //6 muesste eigentlich mit spielerAnzahl ersetzt werden
-		punkteAnzeige = new int [6][21];
-		punkteRealSingle = new int [21];
-		punkteAnzeigeSingle = new int [21];
-		resetPunkte();
-	}
 	
 	public static void init(int spielerAnzahl, Player currentPlayer) {
 		PunkteTabelle.currentPlayer = currentPlayer;
+		PunkteTabelle.spielerAnzahl = spielerAnzahl;
 		punkteBerechnet = new int[13];
-		punkteReal = new int [6][21]; //6 muesste eigentlich mit spielerAnzahl ersetzt werden
-		punkteAnzeige = new int [6][21];
-		punkteRealSingle = new int [21];
-		punkteAnzeigeSingle = new int [21];
+		punkteReal = new int [spielerAnzahl][19];
+		punkteAnzeige = new int [spielerAnzahl][19];
+		punkteRealSingle = new int [19];
+		punkteAnzeigeSingle = new int [19];
 		resetPunkte();
+		updatePunkteReal();
 	}
 	
+	//kniffel update, 2 mal updateScoreStats()
 	public static void chooseCombination(int CombinationIndex) {
 		currentPlayer.updateScoreStats(CombinationIndex, punkteBerechnet[CombinationIndex]);
 		updatePunkteReal();
@@ -56,7 +51,11 @@ public class PunkteTabelle {
 		//erste umwandlung fuer einser usw. auch gesamtZahlenPunkte berechnung
 		for(int i = 0; i < 6; i++) {
 			punkteRealSingle[i] = playerScoreStats[i];
-			gesamtZahlenPunkte += playerScoreStats[i];
+
+			if(punkteRealSingle[i] > 0) {
+				gesamtZahlenPunkte += playerScoreStats[i];
+			}
+			
 		}
 		
 		//bonus check
@@ -75,7 +74,11 @@ public class PunkteTabelle {
 		//zweite teil der Berechnung (TODO: kann man nicht das ganze in einem for reinPacken und einfach indeces "groesser machen?")
 		for(int i = 6; i < 13; i++) {
 			punkteRealSingle[i+4] = playerScoreStats[i];
-			gesamtUntereTeil += playerScoreStats[i];
+
+			if(playerScoreStats[i] > 0) {
+				gesamtUntereTeil += playerScoreStats[i];
+			}
+			
 		}
 		
 		endSumme = gesamtObereTeil + gesamtUntereTeil;
@@ -95,14 +98,14 @@ public class PunkteTabelle {
 		
 		//check obere teil
 		for(int i = 0; i < 6; i++) {
-			if(punkteRealSingle[i] == 0) {
+			if(punkteRealSingle[i] < 0) {
 				punkteAnzeigeSingle[i] = punkteBerechnet[i];
 			}
 		}
 		
 		//check untere teil
 		for(int i = 6; i < 13; i++) {
-			if(punkteRealSingle[i+4] == 0) {
+			if(punkteRealSingle[i+4] < 0) {
 				punkteAnzeigeSingle[i+4] = punkteBerechnet[i];
 			}
 		}
@@ -114,17 +117,17 @@ public class PunkteTabelle {
 	}
 	
 	private static void resetPunkte() {
-		for(int i = 0; i < 6; i++) {
-			Arrays.fill(punkteReal[i], 0);
-			Arrays.fill(punkteAnzeige[i], 0);
+		for(int i = 0; i < spielerAnzahl; i++) {
+			Arrays.fill(punkteReal[i], -1);
+			Arrays.fill(punkteAnzeige[i], -1);
 		}
 		resetPunkteSingle();
 	}
 	
 	private static void resetPunkteSingle() {
-		Arrays.fill(punkteRealSingle, 0);
-		Arrays.fill(punkteAnzeigeSingle, 0);
-		Arrays.fill(punkteBerechnet, 0);
+		Arrays.fill(punkteRealSingle, -1);
+		Arrays.fill(punkteAnzeigeSingle, -1);
+		Arrays.fill(punkteBerechnet, -1);
 	}
 	
 	public static void output(int[] arrayInput) {
@@ -133,25 +136,34 @@ public class PunkteTabelle {
 		}
 	}
 	
-
-	
 	public static void setCurrentPlayer(Player currentPlayer) {
 		PunkteTabelle.currentPlayer = currentPlayer;
 	}
 	
-	public static int[][] getPunkte(String PunkteType) {
-		switch(PunkteType) {
-		case "anzeige":
-			return punkteAnzeige;
-		case "real":
-			return punkteReal;
-		default:
-			return null;
-		}
+	// public static int[][] getPunkte(String PunkteType) {
+	// 	switch(PunkteType) {
+	// 	case "anzeige":
+	// 		return punkteAnzeige;
+	// 	case "real":
+	// 		return punkteReal;
+	// 	default:
+	// 		return null;
+	// 	}
+	// }
+
+	public static int[][] getPunkteReal() {
+		return punkteReal;
 	}
 	
+	
+	public static int[][] getPunkteAnzeige() {
+		output(punkteAnzeige[currentPlayer.getReihenFolgeNummer()]);
+		return punkteAnzeige;
+	}
+
 	public static int[] getPunkteBerechnet() {
-		return PunkteTabelle.punkteBerechnet;
+		output(punkteReal[currentPlayer.getReihenFolgeNummer()]);
+		return punkteBerechnet;
 	}
 	
 	public static void setPunkteBerechnet(Map<String, Integer> punkteBerechnet) {

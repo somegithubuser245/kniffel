@@ -1,5 +1,6 @@
 package main.gui;
 
+import main.logic.GameController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -120,16 +121,17 @@ public class StartScreen extends JFrame implements ActionListener {
             	}
             	namen[i] = namensFelder[i].getText();
             	System.out.println("" + namen[i]);
+                GameController.initGame(namen, anzahlSpieler);
             }
             //namen feld zu gamecontroller übergeben
             	//GameController.setSpielerNamen(namen)
             
             //spielerAnzahl an GameController übergeben
-            	//GameContorller.setSpielerAnzahl(anzahlSpieler)
+            	// muss nicht!! array length() reicht
             
             
         	
-        	
+        	//TODO: hier noch ändern?? über GUI/GameController
         	// Mainscreen öffnen und Startscreen schließen
             new MainScreen().setVisible(true);
             dispose(); // Schließt das Startscreen-Fenster

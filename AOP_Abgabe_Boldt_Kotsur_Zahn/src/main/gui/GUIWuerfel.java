@@ -48,7 +48,7 @@ public class GUIWuerfel extends JButton {
     	    
     	    // Roll the dice only if it's not held
     	    public void wuerfeln(int v) {
-    	        if (!gehalten) {
+    	        if (!gehalten) { //TODO gehalten test nicht nötig, würfelergebnis beachtet gehaltene würfel!!!
     	            value = v;
     	            updateDisplay();
     	        }

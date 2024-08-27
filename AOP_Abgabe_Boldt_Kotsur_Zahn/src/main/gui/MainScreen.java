@@ -6,8 +6,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.util.Arrays;
 
 import java.awt.*;
+import main.data.*;
+import main.logic.*;
 
 /*die Klasse übernimmt das komplette Hauptfenster des Spiels, die Würfelanzeige, Punkte-Tabelle, Spielernamen 
  *und Input für "Würfeln", "Würfel Halten", "Punkte eintragen", "Bestätigen", "nächster Spieler"
@@ -29,7 +32,7 @@ public class MainScreen extends JFrame {
 	private int  windowSizeWidth = 1000;
 	private int  windowSizeHeight = 800;
 	
-	public static int[] wuerfelErgebnis = { 1, 2, 3, 4, 5 }; // von Niclas : array zum anzeigen der Würfel
+	public static int[] wuerfelErgebnis = new int[5]; // von Niclas : array zum anzeigen der Würfel
 	private static boolean[] wuerfelGehalten = { false, false, false, false, false }; // für niclas : array mit user
 																						// auswahl
 	public static int anzahlWuerfe = 0;
@@ -42,39 +45,22 @@ public class MainScreen extends JFrame {
 	
 	
 	// wird in gui gesetzt und muss in die spieler instanzen
-
-	public static String[] spielerNamen = { "david", "niclas", "dani", "tobias", "lordi", "nora" };
-				//TODO					= GameController.getSpielerNamen();
+	
+	//setSpielerNamenDefault neue methode
+	public static String[] spielerNamen = new String[6];
+	
 	
 	
 	// punkteAnzeige Mischung aus *Berechnet und *Real -> von Dani (und Niclas)
-	public static int[][] punkteAnzeige = { { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 },
-			{ 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
-	//TODO punkteAnzeige = punkteTabelle.getPunkteAnzeige
-	public static int[][] punkteBerechnet = { { 115, 115, 115, 115, 115, 115 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 15, 15, 15, 15, 15 }, { 15, 0, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 }, { 15, 15, 15, 15, 15, 15 },
-			{ 15, 0, 15, 15, 15, 15 } };
-	//TODO punkteBerechnet = punkteTabelle.getPunkteBerechnet
-	// punkteReal[6][21] und punkteAnzeige[6][21] (länge der arrays in den brackets)
+	public static int[][] punkteAnzeige = PunkteTabelle.getPunkteAnzeige();
+	
+	public static int[] punkteBerechnet = PunkteTabelle.getPunkteBerechnet();
 
-	public static int[][] punkteReal = { { 10, 15, 0, 0, 0, 1000 }, { -1, -1, -1, -1, -1, -1 },
-			{ -1, -1, -1, -1, -1, -1 }, { 15, -1, -1, 0, -1, -1 }, { -1, -1, -1, -1, -1, -1 },
-			{ -1, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 }, { -1, -1, 0, -1, -1, -1 },
-			{ -1, -1, -1, -1, -1, -1 }, { 0, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 },
-			{ -1, -1, 15, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, 0 },
-			{ -1, -1, 16, -1, -1, -1 }, { -1, 4, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, 10 },
-			{ -1, -1, -1, -1, 16, -1 }, { -1, -1, -1, -1, -1, -1 }, { -1, -1, -1, -1, -1, -1 },
-			{ -1, -1, -1, -1, -1, -1 } };
-	//TODO punkteReal = punkteTabelle.getPunkteReal
+	//TODO punkte berechnet ist 1D und muss nur für aktuellen Spieler
+
+	// punkteReal[6][21] und punkteAnzeige[6][21] (länge der arrays in den brackets)
+	public static int[][] punkteReal = PunkteTabelle.getPunkteReal();
+
 
 	
 	
@@ -100,20 +86,16 @@ public class MainScreen extends JFrame {
 	// "Spieler 5", "Spieler 6" };
 	int punkteSpielerAuswahl;
 	String stringCombo;
-	String comboSpielerAuswahl;
+	int comboSpielerAuswahl;
 	boolean nullPunkteWarnung = false;
 
 	public MainScreen() {
-		// DataFunktion zum Test
-		for (int x = 0; x < 21; x++) {
-			for (int y = 0; y < 6; y++) {
-				punkteAnzeige[x][y] = x + y;
-			}
-		}
+		spielerNamen = GameController.getSpielerNamen();
+		anzahlSpieler = spielerNamen.length;
 		
+		System.out.println(Arrays.toString(spielerNamen));
 		System.out.println("Current Player = "+spielerNamen[currentPlayer]+" (Nr. "+currentPlayer+")");
 		
-		refreshTable();
 
 		setWindowOptions();
 
@@ -132,8 +114,6 @@ public class MainScreen extends JFrame {
 
 		// GUI sichtbar machen
 		setVisible(true);
-
-		
 
 	}
 
@@ -169,12 +149,16 @@ public class MainScreen extends JFrame {
 		wuerfeln.addActionListener(e -> {
 			JLabel hinweis1 = new JLabel("    Klicke Würfel");
 			JLabel hinweis2 = new JLabel("zum Halten!");
-			
+			//eigentliche WuerfelMethode
+			wuerfeln();
+
+
+			//Zusatz GUI infos 
 			if (anzahlWuerfe == 0) {
 				dicePanel.add(hinweis1);
 				dicePanel.add(hinweis2);
 			}
-			wuerfeln();
+			
 			if (anzahlWuerfe == 1) {				
 				dicePanel.add(hinweisWurfZahl);
 				hinweisWurfZahl.setText(""+anzahlWuerfe+". Wurf");
@@ -201,6 +185,12 @@ public class MainScreen extends JFrame {
 	public void wuerfeln() {
 		// Hinzufügen eines ActionListeners mit Lambda-Ausdruck
 
+		//gehaltene Würfel and Wuefel-Klasse übergeben damit diese nicht geändert werden
+		if(anzahlWuerfe > 0) uebergebeGehalteneWuerfel();
+
+		//gamecontroller aktiviert würfel funktion der würf.Klasse und übergibt GUI das würfelergebnis
+		wuerfelErgebnis = GameController.wuerfeln();
+
 		// Code, der ausgeführt wird, wenn der Button geklickt wird
 		if (anzahlWuerfe == 3) {
 			System.out.println("Max Würfelzahlerreicht");
@@ -209,15 +199,15 @@ public class MainScreen extends JFrame {
 
 			System.out.println("Wird gewürfelt");
 			for (int i = 0; i < 5; i++) {
+				//wuerfelErgebnis von Wuerfel Klasse
 				wuerfelButtons[i].wuerfeln(wuerfelErgebnis[i]);
 				System.out.println("" + anzahlWuerfe + ". Wurf: Würfel " + (i + 1) + ": " + wuerfelButtons[i].getValue()
 						+ " (Gehalten = " + wuerfelButtons[i].gehalten() + ")");
-				wuerfelErgebnis[i] = anzahlWuerfe;
+				
 
 			}
 			anzahlWuerfe++;
 			System.out.println("anzahl Würfe: " + anzahlWuerfe);
-
 		}
 		if (anzahlWuerfe == 0) {
 
@@ -225,14 +215,15 @@ public class MainScreen extends JFrame {
 				System.out.println("erster wurf, erstelle würfel: " + i);
 				wuerfelButtons[i] = new GUIWuerfel(wuerfelErgebnis[i]); // Create an instance of GUIWuerfel
 				dicePanel.add(wuerfelButtons[i]);
-				wuerfelErgebnis[i] = anzahlWuerfe;
 
 			}
 
 			anzahlWuerfe++;
 			System.out.println("anzahlWuerfe=" + anzahlWuerfe);
 		}
-
+		
+		//entfernt comboAnzeige JPanel und aktualisiert dann die ScoreTable und fügt dann die comboAnzeige wieder ein 
+		refreshComboAnzeige();
 	}
 
 	private void setWindowOptions() {
@@ -243,61 +234,11 @@ public class MainScreen extends JFrame {
 		setLayout(new BorderLayout());
 	}
 
-	public static boolean[] getWuerfelGehalten() {
-		return wuerfelGehalten;
-	}
-
-	public static void setWuerfelGehalten(boolean[] wuerfelGehalten) {
+	public static void uebergebeGehalteneWuerfel() {
 		for (int i = 0; i < 5; i++) {
 			MainScreen.wuerfelGehalten[i] = wuerfelButtons[i].gehalten();
-
 		}
-	}
-
-	private void refreshTable() {
-		// aktualisiert das data Array und die JTable
-		data = new String[][] {
-				{ spielerNamen[0], spielerNamen[1], spielerNamen[2], spielerNamen[3], spielerNamen[4],
-						spielerNamen[5] },
-				{ "" + punkteAnzeige[0][0], "" + punkteAnzeige[0][1], "" + punkteAnzeige[0][2],
-						"" + punkteAnzeige[0][3], "" + punkteAnzeige[0][4], "" + punkteAnzeige[0][5] },
-				{ "" + punkteAnzeige[1][0], "" + punkteAnzeige[1][1], "" + punkteAnzeige[1][2],
-						"" + punkteAnzeige[1][3], "" + punkteAnzeige[1][4], "" + punkteAnzeige[1][5] },
-				{ "" + punkteAnzeige[2][0], "" + punkteAnzeige[2][1], "" + punkteAnzeige[2][2],
-						"" + punkteAnzeige[2][3], "" + punkteAnzeige[2][4], "" + punkteAnzeige[2][5] },
-				{ "" + punkteAnzeige[3][0], "" + punkteAnzeige[3][1], "" + punkteAnzeige[3][2],
-						"" + punkteAnzeige[3][3], "" + punkteAnzeige[3][4], "" + punkteAnzeige[3][5] },
-				{ "" + punkteAnzeige[4][0], "" + punkteAnzeige[4][1], "" + punkteAnzeige[4][2],
-						"" + punkteAnzeige[4][3], "" + punkteAnzeige[4][4], "" + punkteAnzeige[4][5] },
-				{ "" + punkteAnzeige[5][0], "" + punkteAnzeige[5][1], "" + punkteAnzeige[5][2],
-						"" + punkteAnzeige[5][3], "" + punkteAnzeige[5][4], "" + punkteAnzeige[5][5] },
-				{ "" + punkteAnzeige[6][0], "" + punkteAnzeige[6][1], "" + punkteAnzeige[6][2],
-						"" + punkteAnzeige[6][3], "" + punkteAnzeige[6][4], "" + punkteAnzeige[6][5] },
-				{ "" + punkteAnzeige[7][0], "" + punkteAnzeige[7][1], "" + punkteAnzeige[7][2],
-						"" + punkteAnzeige[7][3], "" + punkteAnzeige[7][4], "" + punkteAnzeige[7][5] },
-				{ "" + punkteAnzeige[8][0], "" + punkteAnzeige[8][1], "" + punkteAnzeige[8][2],
-						"" + punkteAnzeige[8][3], "" + punkteAnzeige[8][4], "" + punkteAnzeige[8][5] },
-				{ "" + punkteAnzeige[9][0], "" + punkteAnzeige[9][1], "" + punkteAnzeige[9][2],
-						"" + punkteAnzeige[9][3], "" + punkteAnzeige[9][4], "" + punkteAnzeige[9][5] },
-				{ "" + punkteAnzeige[10][0], "" + punkteAnzeige[10][1], "" + punkteAnzeige[10][2],
-						"" + punkteAnzeige[10][3], "" + punkteAnzeige[10][4], "" + punkteAnzeige[10][5] },
-				{ "" + punkteAnzeige[11][0], "" + punkteAnzeige[11][1], "" + punkteAnzeige[11][2],
-						"" + punkteAnzeige[11][3], "" + punkteAnzeige[11][4], "" + punkteAnzeige[11][5] },
-				{ "" + punkteAnzeige[12][0], "" + punkteAnzeige[12][1], "" + punkteAnzeige[12][2],
-						"" + punkteAnzeige[12][3], "" + punkteAnzeige[12][4], "" + punkteAnzeige[12][5] },
-				{ "" + punkteAnzeige[13][0], "" + punkteAnzeige[13][1], "" + punkteAnzeige[13][2],
-						"" + punkteAnzeige[13][3], "" + punkteAnzeige[13][4], "" + punkteAnzeige[13][5] },
-				{ "" + punkteAnzeige[14][0], "" + punkteAnzeige[14][1], "" + punkteAnzeige[14][2],
-						"" + punkteAnzeige[14][3], "" + punkteAnzeige[14][4], "" + punkteAnzeige[14][5] },
-				{ "" + punkteAnzeige[15][0], "" + punkteAnzeige[15][1], "" + punkteAnzeige[15][2],
-						"" + punkteAnzeige[15][3], "" + punkteAnzeige[15][4], "" + punkteAnzeige[15][5] },
-				{ "" + punkteAnzeige[16][0], "" + punkteAnzeige[16][1], "" + punkteAnzeige[16][2],
-						"" + punkteAnzeige[16][3], "" + punkteAnzeige[16][4], "" + punkteAnzeige[16][5] },
-				{ "" + punkteAnzeige[17][0], "" + punkteAnzeige[17][1], "" + punkteAnzeige[17][2],
-						"" + punkteAnzeige[17][3], "" + punkteAnzeige[17][4], "" + punkteAnzeige[17][5] },
-				{ "" + punkteAnzeige[18][0], "" + punkteAnzeige[18][1], "" + punkteAnzeige[18][2],
-						"" + punkteAnzeige[18][3], "" + punkteAnzeige[18][4], "" + punkteAnzeige[18][5] } };
-
+		Wuerfel.setGehalteneWuerfel(wuerfelGehalten);
 	}
 
 	private void addTableUI() {
@@ -326,16 +267,23 @@ public class MainScreen extends JFrame {
 				confirm.revalidate();
 				confirm.repaint();
 			}
+
 		});
 		nextPlayer = new JButton("Fertig");
 		// TODO reset der GUI wenn "fertig" !!! achtung sollte nicht mehr nötig sein
 		// wenn gamecontroller neue instanzen aufruft !!! @dani
 		nextPlayer.addActionListener(e -> {
-			currentPlayer++;
+			//übergibt combo an gamecontroller als index in combo array der gamecontroller klasse
+			GameController.chooseCombination(comboSpielerAuswahl);
+			//nextplayer im gamecontroller ausführen und mit return wert currentplayer aktualisieren
+			currentPlayer = GameController.nextPlayer();
+
+			//reset values
 			anzahlWuerfe = 0;
 			nextPlayer.setEnabled(false);
 			confirm.setText("Zeile in Tabelle auswählen...");
 			wuerfeln.setEnabled(true);
+			punkteReal = PunkteTabelle.getPunkteReal();
 
 			// entferne die Würfel
 			dicePanel.removeAll();
@@ -349,8 +297,6 @@ public class MainScreen extends JFrame {
 			dicePanel.revalidate();
 			dicePanel.repaint();
 			System.out.println("Current Player = " + currentPlayer);
-			
-
 		});
 		nextPlayer.setEnabled(false);
 		JPanel tableButtons = new JPanel(new GridLayout(1, 2));
@@ -361,8 +307,15 @@ public class MainScreen extends JFrame {
 	
 	
 	private void addScoreTable() {
+
+		punkteAnzeige = Arrays.copyOf(PunkteTabelle.getPunkteAnzeige(),anzahlSpieler);
+		for(int i = 0; i < anzahlSpieler; i++){
+			for(int j = 0; j < 19; j++){
+				System.out.println("punkteAnzeige Test Zeile " + j + " Reihe " + i + " = " + punkteAnzeige[i][j]);
+			}
+		}
 		// array für 1. zeile labels
-		String[] ersteZeile = { "Name", "Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser", "Summe",
+		String[] ersteSpalte = { "Name", "Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser", "Summe",
 				"Bonus (ab 63)", "Oben Gesamt", "Dreierpasch", "Viererpasch", "Full House", "Kleine Straße",
 				"Große Straße", "Kniffel", "Chance", "Unten Gesamt", "Oben Gesamt", "Gesamtpunkte" };
 
@@ -371,8 +324,7 @@ public class MainScreen extends JFrame {
 		JPanel tabelle = new JPanel(new GridBagLayout());
 		// GridBagLAyout Setup
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL; // Fill horizontally
-		
+
 		c.fill = GridBagConstraints.BOTH; // Komponenten können sich ausbreiten
 		c.insets = new Insets(2, 2, 2, 2); // Padding pro Zelle
 		c.weightx = 0;
@@ -381,40 +333,41 @@ public class MainScreen extends JFrame {
 		//gleiche Größe für alle Elemente
 		Dimension sizeFeld = new Dimension((windowSizeWidth/10), (windowSizeHeight/25));
 		
-		//zeilen namen einfügen
-		for (int i = 0; i < ersteZeile.length; i++) {		
+		//combonamen einfügen
+		for (int i = 0; i < ersteSpalte.length; i++) {		
 			c.gridy = i;
 			c.gridx = 0;
-			JLabel zeile = new JLabel(ersteZeile[i]);
+			JLabel zeile = new JLabel(ersteSpalte[i]);
 			zeile.setMinimumSize(sizeFeld);
 			tabelle.add(zeile, c);
 		}		
 		// restliche zellen füllen	
-		for (int y = 0; y < 20; y++) {
-			c.gridy = y;
-			for (int x = 0; x < anzahlSpieler; x++) {		
-				//x=spalten, y=zeilen		
-				c.gridx = x + 1;
-				// spielernamen (1. zeile, y==0) als jlabel
-				if (y == 0) {
-					JLabel name = new JLabel(data[y][x]);
-					name.setMinimumSize(sizeFeld);
-					name.setBackground(new Color(200, 200, 200));
-			        name.setHorizontalAlignment(SwingConstants.CENTER);
-					tabelle.add(name, c);
+		
+		//namen einfügen (erste Zeile)
+		for(int i = 0; i < anzahlSpieler; i++){
+			c.gridy = 0;
+			c.gridx = i+1;
+			JLabel name = new JLabel(spielerNamen[i]);
+			name.setMinimumSize(sizeFeld);
+			name.setBackground(new Color(200, 200, 200));
+			name.setHorizontalAlignment(SwingConstants.CENTER);
+			tabelle.add(name, c);
+		}
+		//restliche zellen einfügen (außer spieler-namen und combo-bezeichnungen)
+		for (int reihe = 1; reihe < anzahlSpieler+1; reihe++) {
+			c.gridx = reihe;
+			for(int zeile = 1; zeile < 20; zeile++){
+				c.gridy = zeile;
+				//feld ist eintragbar
+				if(punkteReal[reihe-1][zeile-1] < 0){
+					System.out.println("Leeres Feld bei reihe: "+ reihe + " currentPlayer = "+(currentPlayer-1));
 				}
-				// gesamtpunkte als jlabel (zeilen mit zwischenrechnung 7,8,9,17,18,19)
-				else if (y == 7 || y == 8 || y == 9 || y == 17 || y == 18 || y == 19) {
-					JLabel zwRechnung = new JLabel(data[y][x]);
-					zwRechnung.setMinimumSize(sizeFeld);
-			        zwRechnung.setHorizontalAlignment(SwingConstants.CENTER);
-					tabelle.add(zwRechnung, c);
-				}
-				// neue punkte als button
-				else if (punkteReal[y][x] < 0 && x == (currentPlayer)) {
-					JButton neuePkt = new JButton(data[y][x]);
-					String stringCombo = ersteZeile[y];
-					int punkte = punkteBerechnet[y][x];
+				if (punkteReal[reihe-1][zeile-1] < 0 && (reihe-1) == currentPlayer) { 
+					System.out.println("Setze interaktiven Knopf bei reihe: "+ reihe + " currentPlayer = "+(currentPlayer-1));
+					JButton neuePkt = new JButton(""+punkteAnzeige[reihe-1][zeile-1]);
+					String stringCombo = ersteSpalte[zeile];
+					int zeileCombo = zeile;
+					int punkte = Integer.parseInt(""+punkteAnzeige[reihe-1][zeile-1]);
 					neuePkt.setMinimumSize(sizeFeld);
 					neuePkt.setPreferredSize(sizeFeld);
 					//neuePkt.setBorder(BorderFactory.createEmptyBorder());
@@ -424,29 +377,87 @@ public class MainScreen extends JFrame {
 						neuePkt.setBackground(new Color(255, 200, 200));
 					} else {
 						neuePkt.setBackground(new Color(200, 255, 200));
-					}			
+					}
 					// punkte int wir vor der lamda expr gespeichert und wenn lambda ausgeführt wird
 					// das passende value genutzt
 					// das wird auch variable capture genannt
-					neuePkt.addActionListener(e -> {
+					neuePkt.addActionListener(e -> {					
 						confirm.setText("Als '" + stringCombo + "' eintragen (" + punkte + " Punkte)");
+						//aktualisiert die SpielerAuswahl Variablen mit den für den Knopf zwischengespeicherten Variablen
 						punkteSpielerAuswahl = punkte;
-						comboSpielerAuswahl = stringCombo;
+						//0-5 = {einser,zweier,...,sechser}
+						if((zeileCombo-1) <= 5){
+							comboSpielerAuswahl = zeileCombo-1;
+						}else if((zeileCombo-1) >= 9){
+							comboSpielerAuswahl = zeileCombo-4;
+						}		
 					});
 					tabelle.add(neuePkt, c);
-				} // bestehende Punkte als label
-				else if (punkteReal[y][x] >= 0 || x != (currentPlayer)) {
-					JLabel bestandPkt = new JLabel(data[y][x]);
+				} else {
+					
+					JLabel bestandPkt = new JLabel("");
+					if(punkteAnzeige[reihe-1][zeile-1] < 0){
+						bestandPkt.setText("-");
+					}else{
+						bestandPkt.setText("" + punkteAnzeige[reihe-1][zeile-1]);
+					}
+					
 					bestandPkt.setMinimumSize(sizeFeld);
 			        bestandPkt.setHorizontalAlignment(SwingConstants.CENTER);
 					tabelle.add(bestandPkt, c);
-				}				
+				
+				}	
+				/*for (int reihe = 0; reihe < anzahlSpieler; reihe++) {		
+				//x=spalten, y=zeilen		
+				c.gridx = reihe+1;
+				// spielernamen (1. zeile, y==0) als jlabel
+				
+				// gesamtpunkte als jlabel (zeilen mit zwischenrechnung 7,8,9,17,18,19)
+				else if (zeile == 7 || zeile == 8 || zeile == 9 || zeile == 17 || zeile == 18 || zeile == 19) {
+					JLabel zwRechnung = new JLabel(""+punkteAnzeige[reihe][zeile-1]); 
+					zwRechnung.setMinimumSize(sizeFeld);
+			        zwRechnung.setHorizontalAlignment(SwingConstants.CENTER);
+					tabelle.add(zwRechnung, c);
+				}
+				// neue punkte als button punkteReal fehlt name in 0. zeile, deshalb -1, reihe ist bei data 
+				else  // bestehende Punkte als label
+				//reihe zeile für punkte real weil [spielerAnzahl][Zeilen]
+				else if (punkteReal[reihe][zeile-1] >= 0 || reihe != (currentPlayer)) {
+					JLabel bestandPkt = new JLabel("" + punkteAnzeige[reihe][zeile-1]);
+					bestandPkt.setMinimumSize(sizeFeld);
+			        bestandPkt.setHorizontalAlignment(SwingConstants.CENTER);
+					tabelle.add(bestandPkt, c);
+				}	*/	
 			}
 		}		
-		comboAnzeige.add(tabelle, BorderLayout.CENTER);
 		tabelle.revalidate();
 		tabelle.repaint();
+		comboAnzeige.add(tabelle, BorderLayout.CENTER);
 	}
+
+
+	private void removeComboAnzeige() {
+    // Remove the comboAnzeige panel from its parent container
+    if (comboAnzeige != null && comboAnzeige.getParent() != null) {
+        getContentPane().remove(comboAnzeige); // Remove from JFrame
+        revalidate(); // Refresh the layout
+        repaint();    // Repaint the UI
+    }
+}
+private void refreshComboAnzeige() {
+    removeComboAnzeige(); // Remove the existing panel first
+
+    // Update or recreate the comboAnzeige panel
+    addScoreTable(); // Assuming this method recreates and updates the comboAnzeige panel
+	// füge Table UI erneut ein
+	addTableUI();
+
+    // Add the updated panel back to the JFrame
+    add(comboAnzeige, BorderLayout.CENTER);
+    revalidate(); // Refresh the layout
+    repaint();    // Repaint the UI
+}
+
 
 	private int getPunkteSpielerAuswahl() {
 		// TODO Auto-generated method stub
@@ -456,7 +467,7 @@ public class MainScreen extends JFrame {
 	// TODO fertig -> currentPlayer++; anzahlWuerfe = 0; fertig deaktivieren,
 	// bestätigen resetten
 
-	public String getComboSpielerAuswahl() {
+	public int getComboSpielerAuswahl() {
 		return comboSpielerAuswahl;
 	}
 }

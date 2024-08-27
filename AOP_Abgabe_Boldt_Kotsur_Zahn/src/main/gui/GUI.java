@@ -8,11 +8,19 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
 	
-		    // Main-Methode zum Testen der GUI
-	    public static void main(String[] args) {
-	         StartScreen startScreen = new StartScreen();
-	    	// MainScreen mainScreen = new MainScreen();
-	        
+	    public static void GUI() {
+	         
 	    }
+
+	public void startScreen(){
+		StartScreen startScreen = new StartScreen();
+	}
+	public void mainScreen(){
+		MainScreen mainScreen = new MainScreen();
+	}
+//public void endScreen(String gewinner, int punktzahl){
+//	EndScreen endScreen = new EndScreen(gewinner, punktzahl;
+//}
+
 	}
 

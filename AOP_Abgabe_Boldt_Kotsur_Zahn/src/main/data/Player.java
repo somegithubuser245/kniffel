@@ -16,7 +16,7 @@ public class Player {
 		this.totalPointsSum = 0;
 		this.anzahlGestrichen = 0;
 		this.scoreStats = new int[14];
-		Arrays.fill(scoreStats, 0);
+		Arrays.fill(scoreStats, -1);
 	}
 	
 	public void updateScoreStats(int combinationIndex, int points) {
