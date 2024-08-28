@@ -9,6 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Arrays;
 
 import java.awt.*;
+import java.awt.event.*;
+
+
+
 import main.data.*;
 import main.logic.*;
 
@@ -75,6 +79,8 @@ public class MainScreen extends JFrame {
 	JButton nextPlayer;
 	private JPanel comboAnzeige;
 	
+	//DebugMode Shift Pressed Down?
+	boolean shiftPressed = false;
 
 	private JPanel dicePanel;
 	private static GUIWuerfel[] wuerfelButtons = new GUIWuerfel[5]; // initiert ein array für 5 instanzen der Würfel
@@ -110,6 +116,8 @@ public class MainScreen extends JFrame {
 		// Elemente in den JFrame packen
 		addToJFrame();
 
+		
+		
 		// GUI sichtbar machen
 		setVisible(true);
 
@@ -152,6 +160,12 @@ public class MainScreen extends JFrame {
 		wuerfeln = new JButton("Würfeln");
 		wuerfeln.setPreferredSize(new Dimension(300, 50));
 		wuerfeln.addActionListener(e -> {
+			 if ((e.getModifiers() & InputEvent.SHIFT_DOWN_MASK) != 0) {
+				 int[] test = {1,1,1,1,1};
+                 System.out.println("Shift key was pressed!");
+                 Wuerfel.setWuerfelWerte(test);
+             } else {
+                 System.out.println("Shift key was not pressed.");
 			System.out.println("GUI Würfeln Knopf gedrückt");
 			JLabel hinweis1 = new JLabel("    Klicke Würfel");
 			JLabel hinweis2 = new JLabel("zum Halten!");
@@ -182,7 +196,7 @@ public class MainScreen extends JFrame {
 			dicePanel.revalidate();
 			leftPanel.revalidate(); // Layout wird neu berechnet
 			leftPanel.repaint(); // Panel wird neu gezeichnet
-
+             }
 		});
 
 		leftPanel.add(dicePanel, BorderLayout.CENTER);
@@ -280,7 +294,7 @@ public class MainScreen extends JFrame {
 		// wenn gamecontroller neue instanzen aufruft !!! @dani
 		nextPlayer.addActionListener(e -> {
 			//übergibt combo an gamecontroller als index in combo array der gamecontroller klasse
-			GameController.chooseCombination(comboSpielerAuswahl);
+			GameController.chooseCombination(comboSpielerAuswahl, punkteSpielerAuswahl);
 			//nextplayer im gamecontroller ausführen und mit return wert currentplayer aktualisieren
 			currentPlayer = GameController.nextPlayer();
 
@@ -380,10 +394,15 @@ public class MainScreen extends JFrame {
 				}
 				if (punkteReal[reihe-1][zeile-1] < 0 && (reihe-1) == currentPlayer) { 
 					
-					JButton neuePkt = new JButton(""+punkteAnzeige[reihe-1][zeile-1]);
+					JButton neuePkt = new JButton("");
+					if(punkteAnzeige[reihe-1][zeile-1] < 0){
+						neuePkt.setText("-");
+					}else{
+						neuePkt.setText("" + punkteAnzeige[reihe-1][zeile-1]);
+					}
 					String stringCombo = ersteSpalte[zeile];
 					int zeileCombo = zeile;
-					int punkte = Integer.parseInt(""+punkteAnzeige[reihe-1][zeile-1]);
+					int punkte = Integer.parseInt("" + punkteAnzeige[reihe-1][zeile-1]);
 					neuePkt.setMinimumSize(sizeFeld);
 					neuePkt.setPreferredSize(sizeFeld);
 					//neuePkt.setBorder(BorderFactory.createEmptyBorder());
@@ -398,15 +417,16 @@ public class MainScreen extends JFrame {
 					// das passende value genutzt
 					// das wird auch variable capture genannt
 					neuePkt.addActionListener(e -> {					
+						
+			                
+						
 						confirm.setText("Als '" + stringCombo + "' eintragen (" + punkte + " Punkte)");
 						//aktualisiert die SpielerAuswahl Variablen mit den für den Knopf zwischengespeicherten Variablen
 						punkteSpielerAuswahl = punkte;
 						//0-5 = {einser,zweier,...,sechser}
-						if((zeileCombo-1) <= 5){
-							comboSpielerAuswahl = zeileCombo-1;
-						}else if((zeileCombo-1) >= 9){
-							comboSpielerAuswahl = zeileCombo-5;
-						}		
+						
+						comboSpielerAuswahl = zeileCombo-1;
+			                
 					});
 					tabelle.add(neuePkt, c);
 				} else {
@@ -423,27 +443,7 @@ public class MainScreen extends JFrame {
 					tabelle.add(bestandPkt, c);
 				
 				}	
-				/*for (int reihe = 0; reihe < anzahlSpieler; reihe++) {		
-				//x=spalten, y=zeilen		
-				c.gridx = reihe+1;
-				// spielernamen (1. zeile, y==0) als jlabel
 				
-				// gesamtpunkte als jlabel (zeilen mit zwischenrechnung 7,8,9,17,18,19)
-				else if (zeile == 7 || zeile == 8 || zeile == 9 || zeile == 17 || zeile == 18 || zeile == 19) {
-					JLabel zwRechnung = new JLabel(""+punkteAnzeige[reihe][zeile-1]); 
-					zwRechnung.setMinimumSize(sizeFeld);
-			        zwRechnung.setHorizontalAlignment(SwingConstants.CENTER);
-					tabelle.add(zwRechnung, c);
-				}
-				// neue punkte als button punkteReal fehlt name in 0. zeile, deshalb -1, reihe ist bei data 
-				else  // bestehende Punkte als label
-				//reihe zeile für punkte real weil [spielerAnzahl][Zeilen]
-				else if (punkteReal[reihe][zeile-1] >= 0 || reihe != (currentPlayer)) {
-					JLabel bestandPkt = new JLabel("" + punkteAnzeige[reihe][zeile-1]);
-					bestandPkt.setMinimumSize(sizeFeld);
-			        bestandPkt.setHorizontalAlignment(SwingConstants.CENTER);
-					tabelle.add(bestandPkt, c);
-				}	*/	
 			}
 		}		
 		tabelle.revalidate();

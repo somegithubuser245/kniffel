@@ -18,9 +18,10 @@ public class GUI extends JFrame {
 	public void mainScreen(){
 		MainScreen mainScreen = new MainScreen();
 	}
-//public void endScreen(String gewinner, int punktzahl){
-//	EndScreen endScreen = new EndScreen(gewinner, punktzahl;
-//}
+
+	public void endScreen(String gewinner, int punktzahl){
+		EndScreen endScreen = new EndScreen(gewinner);
+	}
 
 	}
 

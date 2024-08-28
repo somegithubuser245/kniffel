@@ -20,47 +20,51 @@ public class PunkteTabelle {
 		punkteAnzeige = new int [spielerAnzahl][19];
 		punkteRealSingle = new int [19];
 		punkteAnzeigeSingle = new int [19];
-		resetPunkte();
-		updatePunkteReal();
+		resetPunkte(); //füllt mit -1
+		//updatePunkteReal(); 
 	}
 	
 	//kniffel update, 2 mal updateScoreStats()
-	public static void chooseCombination(int CombinationIndex) {
-		currentPlayer.updateScoreStats(CombinationIndex, punkteBerechnet[CombinationIndex]);
-		updatePunkteReal();
+	// bekommt choosecombination den richtigen index?? 
+	public static void chooseCombination(int combinationIndex, int punkte) {
+		System.out.println("\n[PunkteTabelle class] Index ist " + combinationIndex + "\n");
+		currentPlayer.updateScoreStats();
+		updatePunkteReal(combinationIndex, punkte);
+		updatePunkteAnzeige(true);
 	}
-	
+	//ist die map in richtiger reihenfolge? / das int[]?
 	private static int[] convertMapToArray(Map<String, Integer> mapToConvert) {
 		int[] converted = new int[13];
 		int i = 0;
 		for (String key : mapToConvert.keySet()) {
+			System.out.println(key + " " + mapToConvert.get(key));
             converted[i] = mapToConvert.get(key);
             i++;
         }
 		return converted;
 	}
 	
-	private static void updatePunkteReal()  {
+	private static void updatePunkteReal(int index, int punkte)  {
+		punkteReal[currentPlayer.getReihenFolgeNummer()][index] = punkte;
+
 		int gesamtZahlenPunkte = 0;
 		int bonus = 0;
 		int gesamtObereTeil = 0;
 		int gesamtUntereTeil = 0;
 		int endSumme = 0;
-		int[] playerScoreStats = currentPlayer.getScoreStats();
+		//setze punkte array des CurrentPlayer als punkteRealSingle[]
+		int[] punkteRealSingle = punkteReal[currentPlayer.getReihenFolgeNummer()];
 		
 		//erste umwandlung fuer einser usw. auch gesamtZahlenPunkte berechnung
 		for(int i = 0; i < 6; i++) {
-			punkteRealSingle[i] = playerScoreStats[i];
-
 			if(punkteRealSingle[i] > 0) {
-				gesamtZahlenPunkte += playerScoreStats[i];
+				gesamtZahlenPunkte += punkteRealSingle[i];
 			}
-			
 		}
 		
 		//bonus check
 		if (gesamtZahlenPunkte > 63) {
-			currentPlayer.updateScoreStats(13, 35); //das letzte index ist bei Player bonus
+			currentPlayer.updateScoreStats(); //das letzte index ist bei Player bonus
 			bonus = 35;
 		}
 		
@@ -72,11 +76,10 @@ public class PunkteTabelle {
 		
 		
 		//zweite teil der Berechnung (TODO: kann man nicht das ganze in einem for reinPacken und einfach indeces "groesser machen?")
-		for(int i = 6; i < 13; i++) {
-			punkteRealSingle[i+3] = playerScoreStats[i];
+		for(int i = 9; i < 16; i++) {
 				//habe aus i+4 -> i+3 gemacht. da index im array sonst verschoben (david)
-			if(playerScoreStats[i] > 0) {
-				gesamtUntereTeil += playerScoreStats[i];
+			if(punkteRealSingle[i] > 0) {
+				gesamtUntereTeil += punkteRealSingle[i];
 			}
 			
 		}
@@ -89,31 +92,34 @@ public class PunkteTabelle {
 		
 		//set according to player in the whole table
 		punkteReal[currentPlayer.getReihenFolgeNummer()] = java.util.Arrays.copyOf(punkteRealSingle, punkteRealSingle.length);
-		System.out.println("\npunkte real updated:");
-		output(punkteReal[currentPlayer.getReihenFolgeNummer()]);
 	}
 	
-	public static void updatePunkteAnzeige() {
-		System.arraycopy(punkteRealSingle, 0, punkteAnzeigeSingle, 0, punkteRealSingle.length); //copy all
+	public static void updatePunkteAnzeige(boolean berechnungNachKombo) {
+		punkteAnzeigeSingle = java.util.Arrays.copyOf(punkteReal[currentPlayer.getReihenFolgeNummer()], punkteReal[currentPlayer.getReihenFolgeNummer()].length);
+		//System.arraycopy(punkteReal[currentPlayer.getReihenFolgeNummer], 0, punkteAnzeigeSingle, 0, punkteRealSingle.length); //copy all
 		
+
+		int playerIndex = currentPlayer.getReihenFolgeNummer();
 		//check obere teil
 		for(int i = 0; i < 6; i++) {
-			if(punkteRealSingle[i] < 0) {
+			if(punkteReal[playerIndex][i] < 0 && !berechnungNachKombo) {
 				punkteAnzeigeSingle[i] = punkteBerechnet[i];
+			} else {
+				punkteAnzeigeSingle[i] = punkteReal[playerIndex][i];
 			}
 		}
 		
 		//check untere teil
 		for(int i = 6; i < 13; i++) {
-			if(punkteRealSingle[i+4] < 0) {
-				punkteAnzeigeSingle[i+4] = punkteBerechnet[i];
+			if(punkteReal[playerIndex][i+3] < 0 && !berechnungNachKombo) {
+				punkteAnzeigeSingle[i+3] = punkteBerechnet[i];
+			} else {
+				punkteAnzeigeSingle[i+3] = punkteReal[playerIndex][i+3];
 			}
 		}
 		
 		//copy all to the array
-		punkteAnzeige[currentPlayer.getReihenFolgeNummer()] = java.util.Arrays.copyOf(punkteAnzeigeSingle, punkteAnzeigeSingle.length);
-		System.out.println("\npunkte anzeige updated:");
-		output(punkteAnzeige[currentPlayer.getReihenFolgeNummer()]);
+		punkteAnzeige[playerIndex] = java.util.Arrays.copyOf(punkteAnzeigeSingle, punkteAnzeigeSingle.length);
 	}
 	
 	private static void resetPunkte() {
@@ -139,17 +145,6 @@ public class PunkteTabelle {
 	public static void setCurrentPlayer(Player currentPlayer) {
 		PunkteTabelle.currentPlayer = currentPlayer;
 	}
-	
-	// public static int[][] getPunkte(String PunkteType) {
-	// 	switch(PunkteType) {
-	// 	case "anzeige":
-	// 		return punkteAnzeige;
-	// 	case "real":
-	// 		return punkteReal;
-	// 	default:
-	// 		return null;
-	// 	}
-	// }
 
 	public static int[][] getPunkteReal() {
 		return punkteReal;

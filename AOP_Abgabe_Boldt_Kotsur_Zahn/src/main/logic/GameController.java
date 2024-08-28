@@ -6,13 +6,14 @@ import main.data.*;
 public class GameController {
 	private static int spielerAnzahl;
 	private static boolean gameOver;
+	private static int roundsCounter;
 	
 	private static Player[] playerList;
 	private static String[] playerNamesList;
+	private static boolean[] playerDoneIndexes;
  	private static Player currentPlayer;
 	
 	private static GUI gui;
-	//private int currentRound;
 	
 	
 	public GameController() {
@@ -22,6 +23,7 @@ public class GameController {
 	
 	public static void initGame(String[] namen, int spielerAnzahl) {
 		gameOver = false;
+		roundsCounter = 0;
 		GameController.spielerAnzahl = spielerAnzahl;
 	
 		playerList = new Player[spielerAnzahl];
@@ -37,106 +39,55 @@ public class GameController {
 		PunkteTabelle.init(spielerAnzahl, currentPlayer);
 	}
 	
-	public boolean gameOver() {
-		if(gameOver) {
-			// gui.endScreen();
-			return true;
-		}
-		return false;
-	}
-	
 	public static int nextPlayer() {
 		int index = currentPlayer.getReihenFolgeNummer();
+		// checkPlayerDone();
 
 		if(index < playerList.length - 1) {
-			currentPlayer = playerList[index + 1];
+				currentPlayer = playerList[index + 1];
 		} else {
 			currentPlayer = playerList[0]; //start again from the beginning
 		}
+
+		// for(player : playerList) {
+		// 	int index = currentPlayer.getReiehnFolgeNummer();
+
+		// }
+		
 
 		PunkteTabelle.setCurrentPlayer(currentPlayer);
 		System.out.println("\nnext player von gameController\n");
 		return currentPlayer.getReihenFolgeNummer();
 	}
 	
-	// private void nextRound() {
-	// 	nextPlayer();
-		
-	// 	PunkteTabelle.setCurrentPlayer(currentPlayer);
-	// 	ui.setCurrentPlayerName(currentPlayer.getName());
-	// }
-	
-	// public void mainGameState() {
-	// 	int wurfZahl = Wuerfel.getWurfZahl();
-		
-		
-	// 	if (wurfZahl < 3 && wurfZahl > 0) {
-	// 		switch(ui.chooseNextState()) {
-	// 			case 1: 
-	// 				defaultUiOutput();
-	// 				break;
-	// 			case 2:
-	// 				Wuerfel.setGehalteneWuerfel(ui.inputIndexesToSave());
-	// 				defaultUiOutput();
-	// 				break;
-	// 			case 3: 
-	// 				chooseCombination(false);
-	// 				nextRound();
-	// 				break;
-	// 			default:
-	// 				System.out.println("False input!");
-	// 				break;
-	// 		}
-	// 	} else if (wurfZahl == 0){
-	// 		defaultUiOutput();
-	// 	} else {
-	// 		chooseCombination(true);
-	// 		nextRound();
-	// 	}
-		
-	// }
-	
 	public static int[] wuerfeln() {
 		Wuerfel.wurfeln();
 		PunkteTabelle.setPunkteBerechnet(Combos.getMoeglicheComboPunkte());
-		PunkteTabelle.updatePunkteAnzeige();
+		PunkteTabelle.updatePunkteAnzeige(false);
 		return Wuerfel.getWuerfelWerte();
 	}
-
-// 	private void defaultUiOutput() {
-// 		if (ui.nextRandom()) {
-// 			Wuerfel.wurfeln();
-// 			ui.outputData(Wuerfel.getWuerfelWerte());
-// 			ui.outputPossibleCombinations(Combos.getMoeglicheComboPunkte());
-// 			PunkteTabelle.setPunkteBerechnet(Combos.getMoeglicheComboPunkte());
-// 			PunkteTabelle.updatePunkteAnzeige();
-// //			ui.outputPossibleCombinations(Combos.getMoeglicheComboPunkte());
-// 		}
-// 	}
 	
 
-	public static void chooseCombination(int combinationIndex) {
-		PunkteTabelle.chooseCombination(combinationIndex);
+	public static void chooseCombination(int combinationIndex, int punkte) {
+		PunkteTabelle.chooseCombination(combinationIndex, punkte);
 	}
 	
 	private void checkPlayerDone() {
 		if (currentPlayer.getPlayerDone()) {
-			
+			playerDoneIndexes[currentPlayer.getReihenFolgeNummer()] = true;
 		}
 	}
 
-	// public void erstelleSpieler() {
-
+	// public boolean checkGameOver() {
+	// 	if() {
+			
+	// 		return true;
+	// 	}
+	// 	return false;
 	// }
 
 	//fuer mainScreen bei init
 	public static String[] getSpielerNamen() {
 		return playerNamesList;
 	}
-	
-//	public static int getSpielerAnzahl() {
-//		return spielerAnzahl;
-//	}
-	
-	
 }
