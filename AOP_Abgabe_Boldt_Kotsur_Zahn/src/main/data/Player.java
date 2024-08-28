@@ -14,7 +14,8 @@ public class Player {
 
 	//einetragene punkte müssen in das scorestats array
 	public void updateScoreStats() {
-		anzahlGestrichen ++;
+		anzahlGestrichen++;
+		System.out.println(anzahlGestrichen);
 	}
 	
 	public boolean getPlayerDone() {

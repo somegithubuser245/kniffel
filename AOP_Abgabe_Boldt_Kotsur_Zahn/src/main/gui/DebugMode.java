@@ -6,41 +6,42 @@ import main.data.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class DebugMode extends JFrame {
-    public static Object startButton;
+public class DebugMode extends JDialog {
 
-	public DebugMode() {
-        setTitle("Spiel Beendet");
-        setSize(200, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+	int[] userInput = new int[5];
 
-       JTextField eingabe = new JTextField("5 zahlen eintippen");
-       
-       
+	public DebugMode(JFrame parentFrame) {
+		super(parentFrame, "Würfel Test Cheat", true);
 
-        JButton klick = new JButton("bestätige");
-        klick.addActionListener(e -> {
-            String wuerfel = eingabe.getText();
-         
-            int[] numbers = new int[wuerfel.length()];
-            
-           
-            for (int i = 0; i < wuerfel.length(); i++) {
-                numbers[i] = Character.getNumericValue(wuerfel.charAt(i));
-            }
-            
-            // Output the int array to verify the result
-            for (int num : numbers) {
-                System.out.print(num + " ");
-            }
-            
-           
-            
-        });
-        add(eingabe, BorderLayout.WEST);
-        add(klick, BorderLayout.EAST);
+		setSize(200, 300);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLayout(new BorderLayout());
 
-        setVisible(true);
-    }
+		JTextField eingabe = new JTextField("5 zahlen eintippen");
+
+		JButton klick = new JButton("bestätige");
+		klick.addActionListener(e -> {
+			String wuerfel = eingabe.getText();
+			for (int i = 0; i < 5; i++) {
+				userInput[i] = Character.getNumericValue(wuerfel.charAt(i));
+			}
+			// sys out test
+			for (int num : userInput) {
+				System.out.print(num + " ");
+			}
+			dispose();
+		});
+		add(eingabe, BorderLayout.NORTH);
+		add(klick, BorderLayout.SOUTH);
+		setLocationRelativeTo(parentFrame);
+		setVisible(true);
+	}
+
+	public int[] getUserInput() {
+		System.out.println("GUI [DEBUGMODE] gebe aus userInput");
+		for (int num : userInput) {
+			System.out.print(num + " ");
+		}
+		return userInput;
+	}
 }

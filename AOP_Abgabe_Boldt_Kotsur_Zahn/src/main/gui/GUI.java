@@ -1,8 +1,5 @@
 package main.gui;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 
@@ -12,16 +9,15 @@ public class GUI extends JFrame {
 	         
 	    }
 
-	public void startScreen(){
+	public static void startScreen(){
 		StartScreen startScreen = new StartScreen();
 	}
-	public void mainScreen(){
+	public static void mainScreen(){
 		MainScreen mainScreen = new MainScreen();
 	}
 
-	public void endScreen(String gewinner, int punktzahl){
-		EndScreen endScreen = new EndScreen(gewinner);
-	}
+
+	
 
 	}
 

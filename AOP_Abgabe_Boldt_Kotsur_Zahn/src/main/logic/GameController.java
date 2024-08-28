@@ -13,6 +13,8 @@ public class GameController {
 	private static boolean[] playerDoneIndexes;
  	private static Player currentPlayer;
 	
+	private static int gewinnerPunkte = 1000;
+	private static String gewinnerName = "yupiiiiiiii";
 	private static GUI gui;
 	
 	
@@ -22,7 +24,7 @@ public class GameController {
 	}
 	
 	public static void initGame(String[] namen, int spielerAnzahl) {
-		gameOver = false;
+		gameOver = false; 
 		roundsCounter = 0;
 		GameController.spielerAnzahl = spielerAnzahl;
 	
@@ -89,5 +91,17 @@ public class GameController {
 	//fuer mainScreen bei init
 	public static String[] getSpielerNamen() {
 		return playerNamesList;
+	}
+
+	public static String getGewinnerName() {
+		return gewinnerName;
+	}
+
+	public static int getGewinnerPunkte() {
+		return gewinnerPunkte;
+	}
+
+	public static boolean getGameOver() {
+		return gameOver;
 	}
 }

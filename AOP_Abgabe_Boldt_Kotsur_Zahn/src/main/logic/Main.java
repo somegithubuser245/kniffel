@@ -9,9 +9,9 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		GameController game = new GameController();
+		GUI.startScreen();
 		
-		// EndScreen endScreen = new EndScreen("test");
+		
 		
 //		Wuerfel.wurfeln();
 //		for(int i = 0;i < Wuerfel.getWuerfelWerte().length;i++) {
