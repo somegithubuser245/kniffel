@@ -18,7 +18,7 @@ public class StartScreen extends JFrame implements ActionListener {
 	JButton anzahlPlus;
 	JLabel labelAnzahlSpieler;
 	JLabel spielerNr;
-	//JTextField spielerName;
+	
 	JTextField[] namensFelder = new JTextField[6];
 	
 	GridBagConstraints c;
@@ -29,23 +29,11 @@ public class StartScreen extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridBagLayout());
         
-        //TODO Die GUI springt mit GridBagLayout furchtbar rum, lieber andere Layouts Probieren!
-        // -> vielleicht lieber borderlayouts in borderlayouts wie im mainscreen?
-        
-        
-        /* padding test:
-        //jpanels fuer padding
-        padding = new JPanel(new BorderLayout());
-        content = new JPanel(new GridBagLayout());
-        
-        //padding
-        this.add(new JLabel(""), BorderLayout.NORTH);
-        this.add(new JLabel(""), BorderLayout.SOUTH);
-        */
-        // Initialize the GridBagConstraints object
+    
         c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        // Title label
+        
+        
         JLabel titleLabel = new JLabel("Willkommen zu Kniffel!", SwingConstants.CENTER);
         c.gridx = 0;
         c.gridy = 0;
@@ -54,7 +42,7 @@ public class StartScreen extends JFrame implements ActionListener {
         c.weighty = 0.0;
         this.add(titleLabel, c);
 
-        // Player controls
+        
         anzahlMinus = new JButton(" - ");
         anzahlPlus = new JButton(" + ");
         labelAnzahlSpieler = new JLabel(" " + anzahlSpieler + " ");
@@ -74,11 +62,11 @@ public class StartScreen extends JFrame implements ActionListener {
 
         
 
-        // Filler JPanel als Puffer fuer neue Elemente
+        // Filler JPanel als Puffer fuer neue Elemente (mit weight)
         c.gridy = 2;
-        c.weighty = 0.1; // This component will take up all remaining space
+        c.weighty = 0.1; 
         c.fill = GridBagConstraints.BOTH;
-        this.add(new JPanel(), c); // Empty panel as filler
+        this.add(new JPanel(), c);
         
         // Neues JPanel mit SpielerEinstellungen
         spielerMenu = new JPanel(new GridBagLayout());
@@ -86,9 +74,9 @@ public class StartScreen extends JFrame implements ActionListener {
         c.gridy = 3; 
         c.gridwidth = 4;
         c.weighty = 0.1; 
-        this.add(spielerMenu, c); //JPanel in das Grid (Grid im Grid)
+        this.add(spielerMenu, c); 
 		
-        // Fuege Components in das spielerMenu ein
+        
 		   spielerNr = new JLabel("Spieler 1");
 		   namensFelder[anzahlSpieler-1] = new JTextField(); 
 		   namensFelder[anzahlSpieler-1].setText("Name..?");
@@ -105,12 +93,12 @@ public class StartScreen extends JFrame implements ActionListener {
 		   
 	// Filler JPanel als Puffer fuer neue Elemente
 	   c.gridy = 4;
-	   c.weighty = 0.5; // This component will take up all remaining space
+	   c.weighty = 0.5; 
 	   c.fill = GridBagConstraints.BOTH;
-	   this.add(new JPanel(), c); // Empty panel as filler
+	   this.add(new JPanel(), c); 
 		   
 		   
-     // Start button
+     // Start 
         JButton startButton = new JButton("Spiel Starten");
         startButton.addActionListener(e -> {
             //namen array mit länger der anzahlSpieler initialisieren und für jeden index den eingegebenen Text übernehmen
@@ -123,18 +111,10 @@ public class StartScreen extends JFrame implements ActionListener {
             	System.out.println("" + namen[i]);
                 GameController.initGame(namen, anzahlSpieler);
             }
-            //namen feld zu gamecontroller übergeben
-            	//GameController.setSpielerNamen(namen)
-            
-            //spielerAnzahl an GameController übergeben
-            	// muss nicht!! array length() reicht
-            
-            
-        	
-        	//TODO: hier noch ändern?? über GUI/GameController
+     
         	// Mainscreen öffnen und Startscreen schließen
             new MainScreen().setVisible(true);
-            dispose(); // Schließt das Startscreen-Fenster
+            dispose(); 
         });
 
         c.gridx = 0;
@@ -144,11 +124,11 @@ public class StartScreen extends JFrame implements ActionListener {
         
      // Filler JPanel fuer Padding nach unten
         c.gridy = 6;
-        c.weighty = 0.5; // This component will take up all remaining space
+        c.weighty = 0.5; 
         c.fill = GridBagConstraints.BOTH;
-        this.add(new JPanel(), c); // Empty panel as filler
+        this.add(new JPanel(), c); 
         
-        // Set visibility
+        
         this.setVisible(true);
 
         // Event listeners
@@ -172,8 +152,8 @@ public class StartScreen extends JFrame implements ActionListener {
             if (componentCount >= anzahlSpieler * 2) {
                 
                 	//beide letzten elemente in der komponentenliste löschen (ein spieler weniger)
-                    spielerMenu.remove(componentCount - 1); // Remove last component
-                    spielerMenu.remove(componentCount - 2); // Remove second last component
+                    spielerMenu.remove(componentCount - 1);
+                    spielerMenu.remove(componentCount - 2); 
                 
             }
                     // GUI Refresh
@@ -186,12 +166,12 @@ public class StartScreen extends JFrame implements ActionListener {
     		spielerNr = new JLabel("Spieler " + anzahlSpieler);
     		namensFelder[anzahlSpieler-1] = new JTextField(); 
     		namensFelder[anzahlSpieler-1].setText("Name..?");
-    	     // Position the new components below the existing ones
+    	     
             c.gridx = 0;
-            c.gridy = 1 + anzahlSpieler; // Adjust based on the number of players
+            c.gridy = 1 + anzahlSpieler;
             c.gridwidth = 1;
             c.anchor = GridBagConstraints.WEST;
-            c.weighty = 0.0; // Keep new components from affecting others
+            c.weighty = 0.0;
             spielerMenu.add(spielerNr, c);
 
             c.gridx = 1;

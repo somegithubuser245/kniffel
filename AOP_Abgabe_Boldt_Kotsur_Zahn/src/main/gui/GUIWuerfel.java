@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import javax.swing.JButton;
 
 public class GUIWuerfel extends JButton {
-    private int value;  // Der Wert des Würfels (1-6)
+    private int value;  // Wert des Würfels (1-6)
     private boolean gehalten;
 
     	    public GUIWuerfel(int value) {
@@ -18,37 +18,37 @@ public class GUIWuerfel extends JButton {
     	        this.getPreferredSize();
     	        updateDisplay();
 
-    	        // Add action listener to handle hold/unhold on click
+    	       
     	        this.addActionListener(e -> halteWuerfel());
     	    }
     	   
     	    @Override
     	    public Dimension getPreferredSize() {
-    	        // Calculate and return the preferred size
-    	        return new Dimension(100, 100); // Example dimensions
+    	        
+    	        return new Dimension(100, 100); 
     	    }
     	    
-    	    // Toggle the hold state of the dice
+    	   
     	    private void halteWuerfel() {
     	        gehalten = !gehalten;
     	        updateDisplay();
     	    }
 
-    	    // Update the button text and color based on the current state
+    	    
     	    private void updateDisplay() {
     	        this.setText(String.valueOf(value));
     	        if (gehalten) {
-    	            this.setBackground(Color.RED); // Held dice color
+    	            this.setBackground(Color.RED);
     	        } else {
-    	            this.setBackground(Color.LIGHT_GRAY); // Default dice color
+    	            this.setBackground(Color.LIGHT_GRAY); 
     	        }
     	    }
-    	    //TODO augen als graphic anzeigen??
+    	
     	    
     	    
-    	    // Roll the dice only if it's not held
+    	    
     	    public void wuerfeln(int v) {
-    	        if (!gehalten) { //TODO gehalten test nicht nötig, würfelergebnis beachtet gehaltene würfel!!!
+    	        if (!gehalten) { 
     	            value = v;
     	            updateDisplay();
     	        }

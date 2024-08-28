@@ -83,9 +83,18 @@ public class Wuerfel {
 	}
 	public static void setWuerfelWerte(int[] wuerfelWerte) {
 		Wuerfel.wuerfelWerte = wuerfelWerte;
+		System.out.println("LOGIC [wuerfel class] setze wuerfel auf");
+		for(int i = 0; i<Wuerfel.wuerfelWerte.length; i++) {
+			System.out.println("In: "+ wuerfelWerte[i]+" saved as: "+Wuerfel.wuerfelWerte[i]);
+		}
 	}
 	
 	public static void setGehalteneWuerfel(boolean[] gehalteneWuerfel) {
+		System.out.println("LOGIC [wuerfel] setze gehalten: ");
+		for(boolean w:gehalteneWuerfel) {
+			System.out.println("/n"+w);
+		}
+		
 		Wuerfel.gehalteneWuerfel = gehalteneWuerfel;
 	}
 
