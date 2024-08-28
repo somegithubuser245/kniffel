@@ -73,8 +73,8 @@ public class PunkteTabelle {
 		
 		//zweite teil der Berechnung (TODO: kann man nicht das ganze in einem for reinPacken und einfach indeces "groesser machen?")
 		for(int i = 6; i < 13; i++) {
-			punkteRealSingle[i+4] = playerScoreStats[i];
-
+			punkteRealSingle[i+3] = playerScoreStats[i];
+				//habe aus i+4 -> i+3 gemacht. da index im array sonst verschoben (david)
 			if(playerScoreStats[i] > 0) {
 				gesamtUntereTeil += playerScoreStats[i];
 			}

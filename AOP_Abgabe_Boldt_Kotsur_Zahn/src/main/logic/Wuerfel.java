@@ -15,7 +15,7 @@ public class Wuerfel {
 	
 	
 	public static void wurfeln() {
-		
+		System.out.println("LOGIK wird gewürfelt");
 		for(int i = 0;i < 5;i++) {
 			if (!gehalteneWuerfel[i]) {
 				wuerfelWerte[i] = new Random().nextInt(6)+1;
@@ -27,6 +27,7 @@ public class Wuerfel {
 		
 		wurfZahl += 1;
 		Arrays.fill(gehalteneWuerfel, false);
+		System.out.println("LOGIK fertig gewürfelt");
 	}
 	
 	//CountingSort Hilfarray
@@ -41,6 +42,7 @@ public class Wuerfel {
 	public static void starteComboChecker() {
 		//berchne Punkte von jeder KLasse muss aufgerufen werden
 		// Instanzen der Subklassen erstellen
+		System.out.println("combochecker wird gestartet");
 	    Combos einser = new Einser();
 	    Combos zweier = new Zweier();
 	    Combos dreier = new Dreier();

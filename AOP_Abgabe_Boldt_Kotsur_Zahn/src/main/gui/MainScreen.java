@@ -39,7 +39,7 @@ public class MainScreen extends JFrame {
 	public static int anzahlSpieler = 6; // wird in StartScreen gewählt und übergeben : für dani
 					//TODO				= GameController.getSpielerAnzahl();
 	
-	public int currentPlayer = 1; // 0-5 für 6 spieler , muss von GameController gesetzt werden (und in GUI
+	public int currentPlayer = 0; // 0-5 für 6 spieler , muss von GameController gesetzt werden (und in GUI
 									// aktiviert) : dani
 				//TODO		= GameController.getCurrentPlayer();
 	
@@ -108,13 +108,18 @@ public class MainScreen extends JFrame {
 		addTableUI();
 
 		// Elemente in den JFrame packen
-		add(leftPanel, BorderLayout.WEST);
-		add(comboAnzeige, BorderLayout.CENTER);
-		add(wuerfeln, BorderLayout.SOUTH);
+		addToJFrame();
 
 		// GUI sichtbar machen
 		setVisible(true);
 
+	}
+
+
+	private void addToJFrame() {
+		add(leftPanel, BorderLayout.WEST);
+		add(comboAnzeige, BorderLayout.CENTER);
+		add(wuerfeln, BorderLayout.SOUTH);
 	}
 
 
@@ -147,6 +152,7 @@ public class MainScreen extends JFrame {
 		wuerfeln = new JButton("Würfeln");
 		wuerfeln.setPreferredSize(new Dimension(300, 50));
 		wuerfeln.addActionListener(e -> {
+			System.out.println("GUI Würfeln Knopf gedrückt");
 			JLabel hinweis1 = new JLabel("    Klicke Würfel");
 			JLabel hinweis2 = new JLabel("zum Halten!");
 			//eigentliche WuerfelMethode
@@ -184,7 +190,7 @@ public class MainScreen extends JFrame {
 
 	public void wuerfeln() {
 		// Hinzufügen eines ActionListeners mit Lambda-Ausdruck
-
+		System.out.println("GUI würfeln() ausgeführt");
 		//gehaltene Würfel and Wuefel-Klasse übergeben damit diese nicht geändert werden
 		if(anzahlWuerfe > 0) uebergebeGehalteneWuerfel();
 
@@ -285,6 +291,8 @@ public class MainScreen extends JFrame {
 			wuerfeln.setEnabled(true);
 			punkteReal = PunkteTabelle.getPunkteReal();
 
+			
+		
 			// entferne die Würfel
 			dicePanel.removeAll();
 
@@ -293,10 +301,21 @@ public class MainScreen extends JFrame {
 				wuerfelButtons[i] = null;
 			}
 
-			// Revalidate and repaint the dice panel to update the UI
-			dicePanel.revalidate();
-			dicePanel.repaint();
-			System.out.println("Current Player = " + currentPlayer);
+			 // Remove all components from the JFrame
+		    getContentPane().removeAll();
+
+		    // Rebuild the UI
+		    setWindowOptions();  // Assuming this method sets up the basic JFrame settings
+		    addWuerfelMenu();    // Re-add the dice menu and components
+		    addScoreTable();     // Re-add the score table
+		    addTableUI();        // Re-add the confirm and nextPlayer buttons
+		    addToJFrame();
+		    
+		    // Revalidate and repaint the JFrame
+		    revalidate();
+		    repaint();
+			
+			System.out.println("GUI: Current Player = " + currentPlayer);
 		});
 		nextPlayer.setEnabled(false);
 		JPanel tableButtons = new JPanel(new GridLayout(1, 2));
@@ -309,11 +328,8 @@ public class MainScreen extends JFrame {
 	private void addScoreTable() {
 
 		punkteAnzeige = Arrays.copyOf(PunkteTabelle.getPunkteAnzeige(),anzahlSpieler);
-		for(int i = 0; i < anzahlSpieler; i++){
-			for(int j = 0; j < 19; j++){
-				System.out.println("punkteAnzeige Test Zeile " + j + " Reihe " + i + " = " + punkteAnzeige[i][j]);
-			}
-		}
+		
+		
 		// array für 1. zeile labels
 		String[] ersteSpalte = { "Name", "Einser", "Zweier", "Dreier", "Vierer", "Fünfer", "Sechser", "Summe",
 				"Bonus (ab 63)", "Oben Gesamt", "Dreierpasch", "Viererpasch", "Full House", "Kleine Straße",
@@ -360,10 +376,10 @@ public class MainScreen extends JFrame {
 				c.gridy = zeile;
 				//feld ist eintragbar
 				if(punkteReal[reihe-1][zeile-1] < 0){
-					System.out.println("Leeres Feld bei reihe: "+ reihe + " currentPlayer = "+(currentPlayer-1));
+					
 				}
 				if (punkteReal[reihe-1][zeile-1] < 0 && (reihe-1) == currentPlayer) { 
-					System.out.println("Setze interaktiven Knopf bei reihe: "+ reihe + " currentPlayer = "+(currentPlayer-1));
+					
 					JButton neuePkt = new JButton(""+punkteAnzeige[reihe-1][zeile-1]);
 					String stringCombo = ersteSpalte[zeile];
 					int zeileCombo = zeile;
@@ -389,7 +405,7 @@ public class MainScreen extends JFrame {
 						if((zeileCombo-1) <= 5){
 							comboSpielerAuswahl = zeileCombo-1;
 						}else if((zeileCombo-1) >= 9){
-							comboSpielerAuswahl = zeileCombo-4;
+							comboSpielerAuswahl = zeileCombo-5;
 						}		
 					});
 					tabelle.add(neuePkt, c);

@@ -16,7 +16,11 @@ public class GrosseStrasse extends Combos{
 		int[]GrosseStrasse2 = {0,0,1,1,1,1,1};
 		if(Arrays.equals(GrosseStrasse1, Wuerfel.getAnzahlWerte()) || Arrays.equals(GrosseStrasse2, Wuerfel.getAnzahlWerte())) {
 			moeglicheComboPunkte.put(getComboName(), 40);
+			System.out.println("Combo: Große Straße mit 40 Punkten");
 		}
-		else moeglicheComboPunkte.put(getComboName(), 0);	
+		else {
+			System.out.println("Combo: keine Große Straße");
+			moeglicheComboPunkte.put(getComboName(), 0);	
+		}
 	}
 }

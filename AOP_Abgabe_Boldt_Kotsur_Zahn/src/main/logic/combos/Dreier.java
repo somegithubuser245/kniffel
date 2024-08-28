@@ -15,5 +15,8 @@ public class Dreier extends Combos{
 		
 		int ergebnis = index * Wuerfel.getAnzahlWerte()[index];
 		moeglicheComboPunkte.put(getComboName(), ergebnis);
+		if(ergebnis < 0) {
+			System.out.println("Combo: Dreier mit "+ergebnis+" Punkten");
+		}
 	}
 }

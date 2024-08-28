@@ -19,7 +19,7 @@ public abstract class Combos {
 		moeglicheComboPunkte.put(comboName,punkteWert);
 	}
 	
-	
+
 	
 	
 	public static List<Integer> umgewandeltZuListe(){

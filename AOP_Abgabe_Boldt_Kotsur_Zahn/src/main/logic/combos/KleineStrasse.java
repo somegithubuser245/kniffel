@@ -19,9 +19,11 @@ public class KleineStrasse extends Combos{
 		            counter++;
 		            if (counter >= 4) {     // Wenn vier aufeinanderfolgende Zahlen vorhanden sind
 		                moeglicheComboPunkte.put(getComboName(), 30);
+		                System.out.println("Combo: Kleine Straße mit 30 Punkten");
 		                return;
 		            }
 		        } else {
+		        	System.out.println("Combo: keine Kleine Straße");
 		            counter = 0;  // Wenn eine Zahl nicht vorhanden ist, setze den Counter zurück
 		        }
 		    }
