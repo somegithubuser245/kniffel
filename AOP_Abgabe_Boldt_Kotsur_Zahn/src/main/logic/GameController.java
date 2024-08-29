@@ -13,7 +13,6 @@ public class GameController {
 	
 	private static int gewinnerPunkte = 1000;
 	private static String gewinnerName = "yupiiiiiiii";
-	private static GUI gui;
 	
 	public static void initGame(String[] namen, int spielerAnzahl) {
 		gameOver = false; 
@@ -29,19 +28,20 @@ public class GameController {
 
 
 		currentPlayer = playerList[0];
-		PunkteTabelle.init(spielerAnzahl, currentPlayer);
+		PunkteTabelle.init(spielerAnzahl, 0);
 	}
 	
 	public static int nextPlayer() {
 		int index = currentPlayer.getReihenFolgeNummer();
 
 		if(index < playerList.length - 1) {
-				currentPlayer = playerList[index + 1];
+			index ++;
 		} else {
-			currentPlayer = playerList[0]; //starte am Anfang
+			index = 0;
 		}
 
-		PunkteTabelle.setCurrentPlayer(currentPlayer);
+		currentPlayer = playerList[index];
+		PunkteTabelle.setCurrentPlayer(index);
 		
 		return currentPlayer.getReihenFolgeNummer();
 	}
@@ -56,12 +56,18 @@ public class GameController {
 
 	public static void chooseCombination(int combinationIndex, int punkte) {
 		PunkteTabelle.chooseCombination(combinationIndex, punkte);
+		currentPlayer.updateScoreStats();
 		checkPlayerDone();
 	}
 	
 	private static void checkPlayerDone() {
-		if (PunkteTabelle.getLastPlayerDone()) {
-			gameOver = true;
+		int playerIndex = currentPlayer.getReihenFolgeNummer();
+		int lastPlayerIndex = spielerAnzahl - 1;
+		
+		if (playerIndex == lastPlayerIndex) {
+			gameOver = currentPlayer.getPlayerDone();
+		} else {
+			gameOver = false;
 		}
 	}
 
