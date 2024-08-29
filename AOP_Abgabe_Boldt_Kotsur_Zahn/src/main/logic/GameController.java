@@ -66,9 +66,16 @@ public class GameController {
 		
 		if (playerIndex == lastPlayerIndex) {
 			gameOver = currentPlayer.getPlayerDone();
+			updateGewinner();
 		} else {
 			gameOver = false;
 		}
+	}
+	
+	private static void updateGewinner() {
+		int[] gewinnerData = PunkteTabelle.getGewinner();
+		gewinnerName = playerList[gewinnerData[0]].getName();
+		gewinnerPunkte = gewinnerData[1];
 	}
 
 	//fuer mainScreen bei init

@@ -11,11 +11,14 @@ public class PunkteTabelle {
 	private static int currentPlayerIndex;
 	private static int spielerAnzahl;
 	private static int gewinnerPunkte;
+	private static int gewinnerIndex;
 	
 	
 	public static void init(int spielerAnzahl, int currentPlayerIndex) {
 		PunkteTabelle.currentPlayerIndex = currentPlayerIndex;
 		PunkteTabelle.spielerAnzahl = spielerAnzahl;
+		gewinnerIndex = 0;
+		gewinnerPunkte = 0;
 		punkteBerechnet = new int[13];
 		punkteReal = new int [spielerAnzahl][19];
 		punkteAnzeige = new int [spielerAnzahl][19];
@@ -90,6 +93,7 @@ public class PunkteTabelle {
 		
 		//set according to player in the whole table
 		punkteReal[currentPlayerIndex] = java.util.Arrays.copyOf(punkteRealSingle, punkteRealSingle.length);
+		updateGewinner(endSumme);
 	}
 	
 	public static void updatePunkteAnzeige(boolean berechnungNachKombo) {
@@ -158,6 +162,18 @@ public class PunkteTabelle {
 	
 	public static void setPunkteBerechnet(Map<String, Integer> punkteBerechnet) {
 		PunkteTabelle.punkteBerechnet = convertMapToArray(punkteBerechnet);
+	}
+	
+	private static void updateGewinner(int punkte) {
+		if (punkte > gewinnerPunkte) {
+			gewinnerPunkte = punkte;
+			gewinnerIndex = currentPlayerIndex;
+		}
+	}
+	
+	public static int[] getGewinner() {
+		int [] gewinnerData = {gewinnerIndex, gewinnerPunkte};
+		return gewinnerData;
 	}
 	
 
