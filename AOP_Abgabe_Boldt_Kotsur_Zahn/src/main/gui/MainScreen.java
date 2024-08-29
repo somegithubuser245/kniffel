@@ -280,47 +280,47 @@ public class MainScreen extends JFrame {
 		});
 		nextPlayer = new JButton("Fertig");
 		nextPlayer.addActionListener(e -> {
-			if(GameController.getGameOver()) {
-				openSpielEndeDialog();
-			}else {
-			
 			//übergibt combo an gamecontroller als index in combo array der gamecontroller klasse
 			GameController.chooseCombination(comboSpielerAuswahl, punkteSpielerAuswahl);
-			//nextplayer im gamecontroller ausführen und mit return wert currentplayer aktualisieren
-			currentPlayer = GameController.nextPlayer();
-
-			//resette werte
-			anzahlWuerfe = 0;
-			nextPlayer.setEnabled(false);
-			confirm.setText("Zeile in Tabelle auswählen...");
-			wuerfeln.setEnabled(true);
-			punkteReal = PunkteTabelle.getPunkteReal();
-			nullPunkteWarnung = false;
 			
-		
-			// entferne die Würfel
-			dicePanel.removeAll();
-
-			// wüerfelButtons[] frei machen
-			for (int i = 0; i < wuerfelButtons.length; i++) {
-				wuerfelButtons[i] = null;
-			}
-
-			 // alles vom jframe löschen
-		    getContentPane().removeAll();
-
-		    // neu aufbauen
-		    setWindowOptions();
-		    addWuerfelMenu();    
-		    addScoreTable();     
-		    addTableUI();        
-		    addToJFrame();
-		    
-		    //das hier muss halt immer
-		    revalidate();
-		    repaint();	        
-
-			System.out.println("GUI: Current Player = " + currentPlayer);
+			if(GameController.getGameOver()) {
+				openSpielEndeDialog();
+			} else {
+				//nextplayer im gamecontroller ausführen und mit return wert currentplayer aktualisieren
+				currentPlayer = GameController.nextPlayer();
+	
+				//resette werte
+				anzahlWuerfe = 0;
+				nextPlayer.setEnabled(false);
+				confirm.setText("Zeile in Tabelle auswählen...");
+				wuerfeln.setEnabled(true);
+				punkteReal = PunkteTabelle.getPunkteReal();
+				nullPunkteWarnung = false;
+				
+			
+				// entferne die Würfel
+				dicePanel.removeAll();
+	
+				// wüerfelButtons[] frei machen
+				for (int i = 0; i < wuerfelButtons.length; i++) {
+					wuerfelButtons[i] = null;
+				}
+	
+				 // alles vom jframe löschen
+			    getContentPane().removeAll();
+	
+			    // neu aufbauen
+			    setWindowOptions();
+			    addWuerfelMenu();    
+			    addScoreTable();     
+			    addTableUI();        
+			    addToJFrame();
+			    
+			    //das hier muss halt immer
+			    revalidate();
+			    repaint();	        
+	
+				System.out.println("GUI: Current Player = " + currentPlayer);
 			}
 		});
 		nextPlayer.setEnabled(false);

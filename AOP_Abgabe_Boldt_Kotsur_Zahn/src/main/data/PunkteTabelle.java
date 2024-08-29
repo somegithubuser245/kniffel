@@ -32,7 +32,7 @@ public class PunkteTabelle {
 		updatePunkteReal(combinationIndex, punkte);
 		updatePunkteAnzeige(true);
 	}
-	//ist die map in richtiger reihenfolge? / das int[]?
+	
 	private static int[] convertMapToArray(Map<String, Integer> mapToConvert) {
 		int[] converted = new int[13];
 		int i = 0;
@@ -163,6 +163,15 @@ public class PunkteTabelle {
 	
 	public static void setPunkteBerechnet(Map<String, Integer> punkteBerechnet) {
 		PunkteTabelle.punkteBerechnet = convertMapToArray(punkteBerechnet);
+	}
+	
+	public static boolean getLastPlayerDone() {
+		int playerIndex = currentPlayer.getReihenFolgeNummer() + 1;
+		
+		if (playerIndex == spielerAnzahl) {
+			return currentPlayer.getPlayerDone();
+		}
+		return false;
 	}
 	
 

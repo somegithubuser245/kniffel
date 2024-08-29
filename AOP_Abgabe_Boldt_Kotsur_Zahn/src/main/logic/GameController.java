@@ -6,26 +6,17 @@ import main.data.*;
 public class GameController {
 	private static int spielerAnzahl;
 	private static boolean gameOver;
-	private static int roundsCounter;
 	
 	private static Player[] playerList;
 	private static String[] playerNamesList;
-	private static boolean[] playerDoneIndexes;
  	private static Player currentPlayer;
 	
 	private static int gewinnerPunkte = 1000;
 	private static String gewinnerName = "yupiiiiiiii";
 	private static GUI gui;
 	
-	
-	public GameController() {
-		gui = new GUI();
-		gui.startScreen();
-	}
-	
 	public static void initGame(String[] namen, int spielerAnzahl) {
 		gameOver = false; 
-		roundsCounter = 0;
 		GameController.spielerAnzahl = spielerAnzahl;
 	
 		playerList = new Player[spielerAnzahl];
@@ -43,22 +34,15 @@ public class GameController {
 	
 	public static int nextPlayer() {
 		int index = currentPlayer.getReihenFolgeNummer();
-		// checkPlayerDone();
 
 		if(index < playerList.length - 1) {
 				currentPlayer = playerList[index + 1];
 		} else {
-			currentPlayer = playerList[0]; //start again from the beginning
+			currentPlayer = playerList[0]; //starte am Anfang
 		}
 
-		// for(player : playerList) {
-		// 	int index = currentPlayer.getReiehnFolgeNummer();
-
-		// }
-		
-
 		PunkteTabelle.setCurrentPlayer(currentPlayer);
-		System.out.println("\nnext player von gameController\n");
+		
 		return currentPlayer.getReihenFolgeNummer();
 	}
 	
@@ -72,21 +56,14 @@ public class GameController {
 
 	public static void chooseCombination(int combinationIndex, int punkte) {
 		PunkteTabelle.chooseCombination(combinationIndex, punkte);
+		checkPlayerDone();
 	}
 	
-	private void checkPlayerDone() {
-		if (currentPlayer.getPlayerDone()) {
-			playerDoneIndexes[currentPlayer.getReihenFolgeNummer()] = true;
+	private static void checkPlayerDone() {
+		if (PunkteTabelle.getLastPlayerDone()) {
+			gameOver = true;
 		}
 	}
-
-	// public boolean checkGameOver() {
-	// 	if() {
-			
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
 
 	//fuer mainScreen bei init
 	public static String[] getSpielerNamen() {
