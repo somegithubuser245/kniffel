@@ -5,10 +5,6 @@ import javax.swing.*;
 
 public class GUI extends JFrame {
 	
-	    public static void GUI() {
-	         
-	    }
-
 	public static void startScreen(){
 		StartScreen startScreen = new StartScreen();
 	}
@@ -16,8 +12,5 @@ public class GUI extends JFrame {
 		MainScreen mainScreen = new MainScreen();
 	}
 
-
-	
-
-	}
+}
 

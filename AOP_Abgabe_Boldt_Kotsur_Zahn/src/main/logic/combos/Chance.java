@@ -1,7 +1,7 @@
 package main.logic.combos;
 
 import main.logic.Combos;
-import main.logic.Wuerfel;
+import main.logic.Dice;
 
 public class Chance extends Combos{
 
@@ -10,11 +10,11 @@ public class Chance extends Combos{
 	}
 
 	@Override 
-	public void berechnePunkte() {
-		int ergebnis = Wuerfel.getAugenzahl();
-		System.out.println("Combo: Chance mit "+ergebnis+" Punkten");
+	public void calculatePoints() {
+		int result = Dice.getSum();
+		System.out.println("Combo: Chance mit "+result+" Punkten");
 
-		moeglicheComboPunkte.put(getComboName(), ergebnis);
+		possibleComboPoints.put(getComboName(), result);
 		
 		
 	}

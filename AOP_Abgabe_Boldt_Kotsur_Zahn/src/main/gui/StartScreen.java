@@ -7,19 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StartScreen extends JFrame implements ActionListener {
-	public static int anzahlSpieler = 1;
-	//string array für namen! array länge wird bei spielstart festgesetzt
-	String[] namen;
+	public static int numberOfPlayers = 1;
+	//string array für name! array länge wird bei spielstart festgesetzt
+	String[] name;
 	
-	JPanel spielerMenu;
+	JPanel playerMenu;
 	
 	
-	JButton anzahlMinus;
-	JButton anzahlPlus;
-	JLabel labelAnzahlSpieler;
-	JLabel spielerNr;
+	JButton counterMinus;
+	JButton counterPlus;
+	JLabel numberOfPlayerLabel;
+	JLabel playerNumber;
 	
-	JTextField[] namensFelder = new JTextField[6];
+	JTextField[] namesList = new JTextField[6];
 	
 	GridBagConstraints c;
 	
@@ -43,22 +43,22 @@ public class StartScreen extends JFrame implements ActionListener {
         this.add(titleLabel, c);
 
         
-        anzahlMinus = new JButton(" - ");
-        anzahlPlus = new JButton(" + ");
-        labelAnzahlSpieler = new JLabel(" " + anzahlSpieler + " ");
+        counterMinus = new JButton(" - ");
+        counterPlus = new JButton(" + ");
+        numberOfPlayerLabel = new JLabel(" " + numberOfPlayers + " ");
 
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 1;
         c.anchor = GridBagConstraints.CENTER;
         c.weighty = 0.0;
-        this.add(anzahlMinus, c);
+        this.add(counterMinus, c);
 
         c.gridx = 1;
-        this.add(labelAnzahlSpieler, c);
+        this.add(numberOfPlayerLabel, c);
 
         c.gridx = 2;
-        this.add(anzahlPlus, c);
+        this.add(counterPlus, c);
 
         
 
@@ -69,25 +69,25 @@ public class StartScreen extends JFrame implements ActionListener {
         this.add(new JPanel(), c);
         
         // Neues JPanel mit SpielerEinstellungen
-        spielerMenu = new JPanel(new GridBagLayout());
+        playerMenu = new JPanel(new GridBagLayout());
         c.gridx = 0;
         c.gridy = 3; 
         c.gridwidth = 4;
         c.weighty = 0.1; 
-        this.add(spielerMenu, c); 
+        this.add(playerMenu, c); 
 		
         
-		   spielerNr = new JLabel("Spieler 1");
-		   namensFelder[anzahlSpieler-1] = new JTextField(); 
-		   namensFelder[anzahlSpieler-1].setText("Name..?");
+		   playerNumber = new JLabel("Spieler 1");
+		   namesList[numberOfPlayers-1] = new JTextField(); 
+		   namesList[numberOfPlayers-1].setText("Name..?");
 		   c.gridy = 0;
 		   c.gridx = 0;
 		   c.gridwidth = 1;
 		   c.weighty = 0.0;
-		   spielerMenu.add(spielerNr, c);
+		   playerMenu.add(playerNumber, c);
 		   c.gridx = 1;
 		   c.gridwidth = 6;
-		   spielerMenu.add(namensFelder[anzahlSpieler-1], c);
+		   playerMenu.add(namesList[numberOfPlayers-1], c);
     // ----Ende des inneren Containers----
 		   
 		   
@@ -101,15 +101,15 @@ public class StartScreen extends JFrame implements ActionListener {
      // Start 
         JButton startButton = new JButton("Spiel Starten");
         startButton.addActionListener(e -> {
-            //namen array mit länger der anzahlSpieler initialisieren und für jeden index den eingegebenen Text übernehmen
-        	namen = new String[anzahlSpieler];
-            for(int i = 0; i<anzahlSpieler; i++) {   
-            	if("Name..?".equalsIgnoreCase(namensFelder[i].getText())) {
-            		namensFelder[i].setText("Spieler "+(i+1));
+            //name array mit länger der numberOfPlayers initialisieren und für jeden index den eingegebenen Text übernehmen
+        	name = new String[numberOfPlayers];
+            for(int i = 0; i<numberOfPlayers; i++) {   
+            	if("Name..?".equalsIgnoreCase(namesList[i].getText())) {
+            		namesList[i].setText("Spieler "+(i+1));
             	}
-            	namen[i] = namensFelder[i].getText();
-            	System.out.println("" + namen[i]);
-                GameController.initGame(namen, anzahlSpieler);
+            	name[i] = namesList[i].getText();
+            	System.out.println("" + name[i]);
+                GameController.initGame(name, numberOfPlayers);
             }
      
         	// Mainscreen öffnen und Startscreen schließen
@@ -132,8 +132,8 @@ public class StartScreen extends JFrame implements ActionListener {
         this.setVisible(true);
 
         // Event listeners
-        anzahlMinus.addActionListener(this);
-        anzahlPlus.addActionListener(this);
+        counterMinus.addActionListener(this);
+        counterPlus.addActionListener(this);
     
     }
 
@@ -142,44 +142,44 @@ public class StartScreen extends JFrame implements ActionListener {
     
 	@Override
     public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == anzahlMinus && anzahlSpieler > 1){
+		if(e.getSource() == counterMinus && numberOfPlayers > 1){
     		System.out.println("reduziere");
-            anzahlSpieler = anzahlSpieler - 1;
-    		labelAnzahlSpieler.setText(" " + anzahlSpieler + " ");
+            numberOfPlayers = numberOfPlayers - 1;
+    		numberOfPlayerLabel.setText(" " + numberOfPlayers + " ");
             // die beiden letzten loeschen (Spielername und Nr)
-            int componentCount = spielerMenu.getComponentCount();            
+            int componentCount = playerMenu.getComponentCount();            
             //teste dass es mehr als 2 elemente gibt, da pro spieler 2 elemente (knopf, textfeld) und immer mind. 1 Spieler 
-            if (componentCount >= anzahlSpieler * 2) {
+            if (componentCount >= numberOfPlayers * 2) {
                 
                 	//beide letzten elemente in der komponentenliste löschen (ein spieler weniger)
-                    spielerMenu.remove(componentCount - 1);
-                    spielerMenu.remove(componentCount - 2); 
+                    playerMenu.remove(componentCount - 1);
+                    playerMenu.remove(componentCount - 2); 
                 
             }
                     // GUI Refresh
             this.revalidate();
             this.repaint();
-    	}else if(e.getSource() == anzahlPlus && anzahlSpieler < 6) {
+    	}else if(e.getSource() == counterPlus && numberOfPlayers < 6) {
     		System.out.println("fuege zu");
-    		anzahlSpieler = anzahlSpieler + 1;
-    		labelAnzahlSpieler.setText(" " + anzahlSpieler + " ");
-    		spielerNr = new JLabel("Spieler " + anzahlSpieler);
-    		namensFelder[anzahlSpieler-1] = new JTextField(); 
-    		namensFelder[anzahlSpieler-1].setText("Name..?");
+    		numberOfPlayers = numberOfPlayers + 1;
+    		numberOfPlayerLabel.setText(" " + numberOfPlayers + " ");
+    		playerNumber = new JLabel("Spieler " + numberOfPlayers);
+    		namesList[numberOfPlayers-1] = new JTextField(); 
+    		namesList[numberOfPlayers-1].setText("Name..?");
     	     
             c.gridx = 0;
-            c.gridy = 1 + anzahlSpieler;
+            c.gridy = 1 + numberOfPlayers;
             c.gridwidth = 1;
             c.anchor = GridBagConstraints.WEST;
             c.weighty = 0.0;
-            spielerMenu.add(spielerNr, c);
+            playerMenu.add(playerNumber, c);
 
             c.gridx = 1;
             c.gridwidth = 2;
-            spielerMenu.add(namensFelder[anzahlSpieler-1], c);
+            playerMenu.add(namesList[numberOfPlayers-1], c);
             // GUI Refresh
-            spielerMenu.revalidate();
-            spielerMenu.repaint();
+            playerMenu.revalidate();
+            playerMenu.repaint();
 
     		
     	}

@@ -1,7 +1,7 @@
 package main.logic.combos;
 
 import main.logic.Combos;
-import main.logic.Wuerfel;
+import main.logic.Dice;
 
 public class Sechser extends Combos{
 
@@ -10,11 +10,11 @@ public class Sechser extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
+	public void calculatePoints() {
 		int index = 6;				
 		
-		int ergebnis = index * Wuerfel.getAnzahlWerte()[index];
-		moeglicheComboPunkte.put(getComboName(), ergebnis);
+		int result = index * Dice.getCountingArray()[index];
+		possibleComboPoints.put(getComboName(), result);
 		
 	}
 

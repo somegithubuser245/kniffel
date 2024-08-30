@@ -4,35 +4,35 @@ import main.gui.*;
 import main.data.*;
 
 public class GameController {
-	private static int spielerAnzahl;
+	private static int numberOfPlayers;
 	private static boolean gameOver;
 	
 	private static Player[] playerList;
 	private static String[] playerNamesList;
  	private static Player currentPlayer;
 	
-	private static int gewinnerPunkte = 1000;
-	private static String gewinnerName = "yupiiiiiiii";
+	private static int winnerPoints = 1000;
+	private static String winnerName = "yupiiiiiiii";
 	
-	public static void initGame(String[] namen, int spielerAnzahl) {
+	public static void initGame(String[] names, int numberOfPlayers) {
 		gameOver = false; 
-		GameController.spielerAnzahl = spielerAnzahl;
+		GameController.numberOfPlayers = numberOfPlayers;
 	
-		playerList = new Player[spielerAnzahl];
-		playerNamesList = new String[spielerAnzahl];
+		playerList = new Player[numberOfPlayers];
+		playerNamesList = new String[numberOfPlayers];
 
-		for(int i = 0; i < spielerAnzahl; i++) {
-			playerList[i] = new Player(namen[i], i);
-			playerNamesList[i] = namen[i];
+		for(int i = 0; i < numberOfPlayers; i++) {
+			playerList[i] = new Player(names[i], i);
+			playerNamesList[i] = names[i];
 		}
 
 
 		currentPlayer = playerList[0];
-		PunkteTabelle.init(spielerAnzahl, 0);
+		Points.init(numberOfPlayers, 0);
 	}
 	
 	public static int nextPlayer() {
-		int index = currentPlayer.getReihenFolgeNummer();
+		int index = currentPlayer.getPlayerIndex();
 
 		if(index < playerList.length - 1) {
 			index ++;
@@ -41,54 +41,54 @@ public class GameController {
 		}
 
 		currentPlayer = playerList[index];
-		PunkteTabelle.setCurrentPlayer(index);
+		Points.setCurrentPlayer(index);
 		
-		return currentPlayer.getReihenFolgeNummer();
+		return currentPlayer.getPlayerIndex();
 	}
 	
-	public static int[] wuerfeln() {
-		Wuerfel.wurfeln();
-		PunkteTabelle.setPunkteBerechnet(Combos.getMoeglicheComboPunkte());
-		PunkteTabelle.updatePunkteAnzeige(false);
-		return Wuerfel.getWuerfelWerte();
+	public static int[] roll() {
+		Dice.roll();
+		Points.setCalculatedPoints(Combos.getPossibleComboPoints());
+		Points.updatePointsToShow(false);
+		return Dice.getDiceValues();
 	}
 	
 
-	public static void chooseCombination(int combinationIndex, int punkte) {
-		PunkteTabelle.chooseCombination(combinationIndex, punkte);
+	public static void chooseCombination(int combinationIndex, int points) {
+		Points.chooseCombination(combinationIndex, points);
 		currentPlayer.updateScoreStats();
 		checkPlayerDone();
 	}
 	
 	private static void checkPlayerDone() {
-		int playerIndex = currentPlayer.getReihenFolgeNummer();
-		int lastPlayerIndex = spielerAnzahl - 1;
+		int playerIndex = currentPlayer.getPlayerIndex();
+		int lastPlayerIndex = numberOfPlayers - 1;
 		
 		if (playerIndex == lastPlayerIndex) {
 			gameOver = currentPlayer.getPlayerDone();
-			updateGewinner();
+			updateWinner();
 		} else {
 			gameOver = false;
 		}
 	}
 	
-	private static void updateGewinner() {
-		int[] gewinnerData = PunkteTabelle.getGewinner();
-		gewinnerName = playerList[gewinnerData[0]].getName();
-		gewinnerPunkte = gewinnerData[1];
+	private static void updateWinner() {
+		int[] winnerData = Points.getWinner();
+		winnerName = playerList[winnerData[0]].getName();
+		winnerPoints = winnerData[1];
 	}
 
 	//fuer mainScreen bei init
-	public static String[] getSpielerNamen() {
+	public static String[] getPlayerNames() {
 		return playerNamesList;
 	}
 
-	public static String getGewinnerName() {
-		return gewinnerName;
+	public static String getWinnerName() {
+		return winnerName;
 	}
 
-	public static int getGewinnerPunkte() {
-		return gewinnerPunkte;
+	public static int getWinnerPoints() {
+		return winnerPoints;
 	}
 
 	public static boolean getGameOver() {

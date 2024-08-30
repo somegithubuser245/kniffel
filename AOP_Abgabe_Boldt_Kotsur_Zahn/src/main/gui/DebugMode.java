@@ -17,11 +17,11 @@ public class DebugMode extends JDialog {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 
-		JTextField eingabe = new JTextField("5 zahlen eintippen");
+		JTextField input = new JTextField("5 zahlen eintippen");
 
-		JButton klick = new JButton("bestätige");
-		klick.addActionListener(e -> {
-			String wuerfel = eingabe.getText();
+		JButton click = new JButton("bestätige");
+		click.addActionListener(e -> {
+			String wuerfel = input.getText();
 			for (int i = 0; i < 5; i++) {
 				userInput[i] = Character.getNumericValue(wuerfel.charAt(i));
 			}
@@ -31,8 +31,8 @@ public class DebugMode extends JDialog {
 			}
 			dispose();
 		});
-		add(eingabe, BorderLayout.NORTH);
-		add(klick, BorderLayout.SOUTH);
+		add(input, BorderLayout.NORTH);
+		add(click, BorderLayout.SOUTH);
 		setLocationRelativeTo(parentFrame);
 		setVisible(true);
 	}

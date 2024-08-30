@@ -9,17 +9,17 @@ public class FullHouse extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
-		if(umgewandeltZuListe().contains(2) && umgewandeltZuListe().contains(3)) {
+	public void calculatePoints() {
+		if(transformedToList().contains(2) && transformedToList().contains(3)) {
 			System.out.println("Combo: Full-House mit 25 Punkten");
-			moeglicheComboPunkte.put(getComboName(), 25);
+			possibleComboPoints.put(getComboName(), 25);
 			
 			
 			
 		}
 		else {
 			System.out.println("Combo: kein Full House");
-			moeglicheComboPunkte.put(getComboName(), 0);
+			possibleComboPoints.put(getComboName(), 0);
 		}
 	}
 }

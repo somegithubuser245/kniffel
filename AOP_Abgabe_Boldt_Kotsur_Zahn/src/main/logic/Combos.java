@@ -8,24 +8,24 @@ import java.util.Map;
 public abstract class Combos {
 
 	private String comboName;
-	protected static Map<String, Integer>moeglicheComboPunkte = new LinkedHashMap<>();
-	private int punkteWert = 0;
+	protected static Map<String, Integer>possibleComboPoints = new LinkedHashMap<>();
+	private int pointValue = 0;
 	
 	//Konstruktor generiert HashMap mit Key = KlassenName und Value = PunktZahl, wenn man die jeweilige Kombination wählen sollte
 	public Combos(String comboName) {
 		this.comboName = comboName;
 
-		//key = Comboname --> value = punkteWert
-		moeglicheComboPunkte.put(comboName,punkteWert);
+		//key = Comboname --> value = pointValue
+		possibleComboPoints.put(comboName,pointValue);
 	}
 	
 
 	
 	
-	public static List<Integer> umgewandeltZuListe(){
+	public static List<Integer> transformedToList(){
 		List<Integer> zuListe = new ArrayList<>();
 		
-		for(int i : Wuerfel.getAnzahlWerte() ) {
+		for(int i : Dice.getCountingArray() ) {
 			zuListe.add(i);
 		}
 		return zuListe;
@@ -33,7 +33,7 @@ public abstract class Combos {
 
 	
 	
-	public abstract void berechnePunkte();
+	public abstract void calculatePoints();
 	
 	
 	
@@ -46,17 +46,17 @@ public abstract class Combos {
 		this.comboName = comboName;
 	}
 
-	public static Map<String, Integer> getMoeglicheComboPunkte() {
-		return moeglicheComboPunkte;
+	public static Map<String, Integer> getPossibleComboPoints() {
+		return possibleComboPoints;
 	}
 
-	public void setMoeglicheComboPunkte(Map<String, Integer> moeglicheComboPunkte) {
-		this.moeglicheComboPunkte = moeglicheComboPunkte;
+	public void setPossibleComboPoints(Map<String, Integer> possibleComboPoints) {
+		this.possibleComboPoints = possibleComboPoints;
 	}
-	public int getPunkteWert() {
-		return punkteWert;
+	public int getPointValue() {
+		return pointValue;
 	}
-	public void setPunkteWert(int punkteWert) {
-		this.punkteWert = punkteWert;
+	public void setPointValue(int pointValue) {
+		this.pointValue = pointValue;
 	}
 }

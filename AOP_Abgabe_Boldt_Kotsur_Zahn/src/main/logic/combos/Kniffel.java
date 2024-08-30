@@ -9,15 +9,15 @@ public class Kniffel extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
-		if(umgewandeltZuListe().contains(5)) {
+	public void calculatePoints() {
+		if(transformedToList().contains(5)) {
 			System.out.println("Combo: Kniffel<3 mit 50 Punkten");
-			moeglicheComboPunkte.put(getComboName(), 50);
+			possibleComboPoints.put(getComboName(), 50);
 			
 		}
 		else {
 			System.out.println("Combo: kein Kniffel");
-			moeglicheComboPunkte.put(getComboName(), 0);
+			possibleComboPoints.put(getComboName(), 0);
 		}
 		
 	}

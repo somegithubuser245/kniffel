@@ -1,7 +1,7 @@
 package main.logic.combos;
 
 import main.logic.Combos;
-import main.logic.Wuerfel;
+import main.logic.Dice;
 
 public class ViererPash extends Combos{
 
@@ -10,17 +10,17 @@ public class ViererPash extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
+	public void calculatePoints() {
 			//wenn eine Zahl mind. 4x Vorkommt--> Punkte an Map übergeben ,sonst Punkte = 0 gesetzt
-			if(umgewandeltZuListe().contains(4) || umgewandeltZuListe().contains(5)||umgewandeltZuListe().contains(6)) {
-				int ergebnis = Wuerfel.getAugenzahl();
-				System.out.println("Combo: Vierer-Pasch mit "+ergebnis+" Punkten");
-				moeglicheComboPunkte.put(getComboName(), ergebnis);
+			if(transformedToList().contains(4) || transformedToList().contains(5)||transformedToList().contains(6)) {
+				int result = Dice.getSum();
+				System.out.println("Combo: Vierer-Pasch mit "+result+" Punkten");
+				possibleComboPoints.put(getComboName(), result);
 				
 			}
 			else {
 				System.out.println("Combo: kein Vierer-Pasch");
-				moeglicheComboPunkte.put(getComboName(), 0);
+				possibleComboPoints.put(getComboName(), 0);
 			}
 		
 	}

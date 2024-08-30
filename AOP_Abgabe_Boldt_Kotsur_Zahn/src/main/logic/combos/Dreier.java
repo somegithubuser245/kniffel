@@ -1,7 +1,7 @@
 package main.logic.combos;
 
 import main.logic.Combos;
-import main.logic.Wuerfel;
+import main.logic.Dice;
 
 public class Dreier extends Combos{
 
@@ -10,13 +10,13 @@ public class Dreier extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() {
+	public void calculatePoints() {
 		int index = 3;				
 		
-		int ergebnis = index * Wuerfel.getAnzahlWerte()[index];
-		moeglicheComboPunkte.put(getComboName(), ergebnis);
-		if(ergebnis < 0) {
-			System.out.println("Combo: Dreier mit "+ergebnis+" Punkten");
+		int result = index * Dice.getCountingArray()[index];
+		possibleComboPoints.put(getComboName(), result);
+		if(result < 0) {
+			System.out.println("Combo: Dreier mit "+result+" Punkten");
 		}
 	}
 }

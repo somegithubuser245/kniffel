@@ -32,13 +32,13 @@ public class MainScreen extends JFrame {
 	
 	
 	// punkteAnzeige Mischung aus *Berechnet und *Real -> von Dani (und Niclas)
-	public static int[][] punkteAnzeige = PunkteTabelle.getPunkteAnzeige();
+	public static int[][] punkteAnzeige = Points.getPointsToShow();
 	
-	public static int[] punkteBerechnet = PunkteTabelle.getPunkteBerechnet();
+	public static int[] punkteBerechnet = Points.getCalculatedPoints();
 
 
 	// punkteReal[6][21] und punkteAnzeige[6][21] (länge der arrays in den brackets)
-	public static int[][] punkteReal = PunkteTabelle.getPunkteReal();
+	public static int[][] punkteReal = Points.getPointsReal();
 
 
 	
@@ -54,7 +54,7 @@ public class MainScreen extends JFrame {
 	boolean debugged = false;
 
 	private JPanel dicePanel;
-	private static GUIWuerfel[] wuerfelButtons = new GUIWuerfel[5]; 
+	private static GUIDice[] wuerfelButtons = new GUIDice[5]; 
 
 	
 	int punkteSpielerAuswahl;
@@ -63,7 +63,7 @@ public class MainScreen extends JFrame {
 	boolean nullPunkteWarnung = false;
 
 	public MainScreen() {
-		spielerNamen = GameController.getSpielerNamen();
+		spielerNamen = GameController.getPlayerNames();
 		anzahlSpieler = spielerNamen.length;
 		
 		System.out.println(Arrays.toString(spielerNamen));
@@ -176,8 +176,8 @@ public class MainScreen extends JFrame {
 	            DebugMode dialog = new DebugMode(this); // Create and show dialog
 	            userInput = dialog.getUserInput(); // Get the result
 	           //setze in würfelklasse die userinput werte und setze alle = gehalten
-	            Wuerfel.setWuerfelWerte(userInput);
-	            Wuerfel.setGehalteneWuerfel(halteAlle);
+	            Dice.setDiceValues(userInput);
+	            Dice.setSavedDiceValues(halteAlle);
 	            //wurfel mit debug = true damit logik angepasst wird
 	            wuerfeln(true);
 			}
@@ -195,14 +195,14 @@ public class MainScreen extends JFrame {
 		if(anzahlWuerfe > 0 && !debug) uebergebeGehalteneWuerfel();
 
 		//gamecontroller aktiviert würfel funktion der würf.Klasse und übergibt GUI das würfelergebnis
-		wuerfelErgebnis = GameController.wuerfeln();
+		wuerfelErgebnis = GameController.roll();
 
 		
 		if (anzahlWuerfe == 1 || anzahlWuerfe == 2) {
 
 			for (int i = 0; i < 5; i++) {
-				//wuerfelErgebnis von Wuerfel Klasse
-				wuerfelButtons[i].wuerfeln(wuerfelErgebnis[i]);
+				//wuerfelErgebnis von Dice Klasse
+				wuerfelButtons[i].roll(wuerfelErgebnis[i]);
 			}
 		}
 		if (anzahlWuerfe == 0) {
@@ -223,7 +223,7 @@ public class MainScreen extends JFrame {
 	private void addWuerfel() {
 		for (int i = 0; i < 5; i++) {
 			Font wuerfelFont = new Font("Arial", Font.BOLD, 60); 
-			wuerfelButtons[i] = new GUIWuerfel(wuerfelErgebnis[i]); 
+			wuerfelButtons[i] = new GUIDice(wuerfelErgebnis[i]); 
 			wuerfelButtons[i].setPreferredSize(new Dimension(100,100));
 	        wuerfelButtons[i].setMinimumSize(new Dimension(100,100));
 	        wuerfelButtons[i].setFont(wuerfelFont);
@@ -235,9 +235,9 @@ public class MainScreen extends JFrame {
 	
 	public static void uebergebeGehalteneWuerfel() {
 		for (int i = 0; i < 5; i++) {
-			MainScreen.wuerfelGehalten[i] = wuerfelButtons[i].gehalten();
+			MainScreen.wuerfelGehalten[i] = wuerfelButtons[i].isSaved();
 		}
-		Wuerfel.setGehalteneWuerfel(wuerfelGehalten);
+		Dice.setSavedDiceValues(wuerfelGehalten);
 	}
 	
 	
@@ -294,7 +294,7 @@ public class MainScreen extends JFrame {
 				nextPlayer.setEnabled(false);
 				confirm.setText("Zeile in Tabelle auswählen...");
 				wuerfeln.setEnabled(true);
-				punkteReal = PunkteTabelle.getPunkteReal();
+				punkteReal = Points.getPointsReal();
 				nullPunkteWarnung = false;
 				
 			
@@ -333,7 +333,7 @@ public class MainScreen extends JFrame {
 	
 	private void addScoreTable() {
 
-		punkteAnzeige = Arrays.copyOf(PunkteTabelle.getPunkteAnzeige(),anzahlSpieler);
+		punkteAnzeige = Arrays.copyOf(Points.getPointsToShow(),anzahlSpieler);
 		
 		
 		// array für 1. zeile labels
@@ -374,7 +374,7 @@ public class MainScreen extends JFrame {
 		}		
 		// restliche zellen füllen	
 		
-		//namen einfügen (erste Zeile)
+		//name einfügen (erste Zeile)
 		for(int i = 0; i < anzahlSpieler; i++){
 			c.gridy = 0;
 			c.gridx = i+1;
@@ -385,7 +385,7 @@ public class MainScreen extends JFrame {
 			name.setHorizontalAlignment(SwingConstants.CENTER);
 			tabelle.add(name, c);
 		}
-		//restliche zellen einfügen (außer spieler-namen und combo-bezeichnungen)
+		//restliche zellen einfügen (außer spieler-name und combo-bezeichnungen)
 		for (int reihe = 1; reihe < anzahlSpieler+1; reihe++) {
 			c.gridx = reihe;
 			for(int zeile = 1; zeile < 20; zeile++){
@@ -472,7 +472,7 @@ public class MainScreen extends JFrame {
     endPanel.setLayout(new BorderLayout());
     
     JLabel gewinner = new JLabel();
-    gewinner.setText("Der Gewinner ist: "+GameController.getGewinnerName()+" mit "+GameController.getGewinnerPunkte()+" Punkten :)" );
+    gewinner.setText("Der Gewinner ist: "+GameController.getWinnerName()+" mit "+GameController.getWinnerPoints()+" Punkten :)" );
     endPanel.add(gewinner, BorderLayout.NORTH);
     JButton closeButton = new JButton("Spiel Beenden");
     closeButton.addActionListener(e -> {

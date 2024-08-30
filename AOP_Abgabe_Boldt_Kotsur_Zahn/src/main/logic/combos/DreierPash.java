@@ -1,7 +1,7 @@
 package main.logic.combos;
 
 import main.logic.Combos;
-import main.logic.Wuerfel;
+import main.logic.Dice;
 
 public class DreierPash extends Combos{
 
@@ -11,20 +11,20 @@ public class DreierPash extends Combos{
 	}
 
 	@Override
-	public void berechnePunkte() { 
+	public void calculatePoints() { 
 		//wenn eine Zahl mind. 3x Vorkommt--> Punkte an Map übergeben ,sonst Punkte = 0 gesetzt
-		if(umgewandeltZuListe().contains(3) || umgewandeltZuListe().contains(4) || umgewandeltZuListe().contains(5) || umgewandeltZuListe().contains(6)) {
+		if(transformedToList().contains(3) || transformedToList().contains(4) || transformedToList().contains(5) || transformedToList().contains(6)) {
 			//TODO darf nur die augen des dreier Pasches beinhalten!!!
-			int ergebnis = Wuerfel.getAugenzahl();
-			System.out.println("Combo: Dreier-Pasch mit "+ergebnis+" Punkten");
-			moeglicheComboPunkte.put(getComboName(), ergebnis);
+			int result = Dice.getSum();
+			System.out.println("Combo: Dreier-Pasch mit "+result+" Punkten");
+			possibleComboPoints.put(getComboName(), result);
 			
 			
 			
 		}
 		else {
 			System.out.println("Combo: kein Dreier-Pasch");
-			moeglicheComboPunkte.put(getComboName(), 0);
+			possibleComboPoints.put(getComboName(), 0);
 		}
 		
 	}
