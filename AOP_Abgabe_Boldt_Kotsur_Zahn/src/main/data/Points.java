@@ -3,17 +3,18 @@ import java.util.Map;
 import java.util.Arrays;
 
 public class Points {
-	private static int[] calculatedPoints;
-	private static int[][] pointsReal;
-	private static int[][] pointsToShow;
-	private static int[] pointsRealSingle;
-	private static int[] pointsToShowSingle;
+	private static int[] calculatedPoints; //moegliche ComboPunkte
+	private static int[][] pointsReal; // tatsaechliche Punkte
+	private static int[][] pointsToShow; // angezeigte Punkte
+	private static int[] pointsRealSingle; //Zwischenspeicherung
+	private static int[] pointsToShowSingle; //Zwischenspiecherung
 	private static int currentPlayerIndex;
 	private static int numberOfPlayers;
 	private static int pointsWinner;
 	private static int winnerIndex;
 	
 	
+	//Initialisierung --> Aufruf über GameController
 	public static void init(int number, int currentPlayerIndex) {
 		Points.currentPlayerIndex = currentPlayerIndex;
 		Points.numberOfPlayers = number;
@@ -27,14 +28,14 @@ public class Points {
 		resetPoints(); //füllt mit -1
 	}
 	
-	//kniffel update, 2 mal updateScoreStats()
-	// bekommt choosecombination den richtigen index?? 
+	//Auswahl der Combo + PointsArray update
 	public static void chooseCombination(int combinationIndex, int points) {
 		System.out.println("\n[Points class] Index ist " + combinationIndex + "\n");
 		updatePointsReal(combinationIndex, points);
 		updatePointsToShow(true);
 	}
 	
+
 	private static int[] convertMapToArray(Map<String, Integer> mapToConvert) {
 		int[] converted = new int[13];
 		int i = 0;
@@ -45,7 +46,8 @@ public class Points {
         }
 		return converted;
 	}
-	
+
+	// Zwischenrechnungen und Verschmelzen von PointArrays
 	private static void updatePointsReal(int index, int points)  {
 		pointsReal[currentPlayerIndex][index] = points;
 
@@ -76,9 +78,8 @@ public class Points {
 		pointsRealSingle[8] = sumTop;
 		
 		
-		//zweite teil der Berechnung (TODO: kann man nicht das ganze in einem for reinPacken und einfach indeces "groesser machen?")
+		//zweite teil der Berechnung 
 		for(int i = 9; i < 16; i++) {
-				//habe aus i+4 -> i+3 gemacht. da index im array sonst verschoben (david)
 			if(pointsRealSingle[i] > 0) {
 				sumBottom += pointsRealSingle[i];
 			}
@@ -92,12 +93,12 @@ public class Points {
 		pointsRealSingle[18] = endSum;
 		
 		//set according to player in the whole table
-		pointsReal[currentPlayerIndex] = java.util.Arrays.copyOf(pointsRealSingle, pointsRealSingle.length);
+		pointsReal[currentPlayerIndex] = Arrays.copyOf(pointsRealSingle, pointsRealSingle.length);
 		updateWinner(endSum);
 	}
 	
 	public static void updatePointsToShow(boolean calculateAfterCombo) {
-		pointsToShowSingle = java.util.Arrays.copyOf(pointsReal[currentPlayerIndex], pointsReal[currentPlayerIndex].length);
+		pointsToShowSingle = Arrays.copyOf(pointsReal[currentPlayerIndex], pointsReal[currentPlayerIndex].length);
 		
 		//check obere teil
 		for(int i = 0; i < 6; i++) {
@@ -117,8 +118,8 @@ public class Points {
 			}
 		}
 		
-		//copy all to the array
-		pointsToShow[currentPlayerIndex] = java.util.Arrays.copyOf(pointsToShowSingle, pointsToShowSingle.length);
+		//kopiert alles zum Array
+		pointsToShow[currentPlayerIndex] = Arrays.copyOf(pointsToShowSingle, pointsToShowSingle.length);
 	}
 	
 	private static void resetPoints() {

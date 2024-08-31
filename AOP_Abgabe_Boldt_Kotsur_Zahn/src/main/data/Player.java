@@ -12,7 +12,7 @@ public class Player {
 		this.comboDoneCounter = 0;
 	}
 
-	//einetragene punkte müssen in das scorestats array
+	// erhöht ComboDoneCounter
 	public void updateScoreStats() {
 		comboDoneCounter++;
 		System.out.println("\nAnzahlGestrichen: " + comboDoneCounter + "\n");

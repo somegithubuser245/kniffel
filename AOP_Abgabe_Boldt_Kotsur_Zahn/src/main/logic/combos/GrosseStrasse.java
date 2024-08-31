@@ -12,6 +12,7 @@ public class GrosseStrasse extends Combos{
 
 	@Override
 	public void calculatePoints() {
+		//moegliche GrosseStrassekombinationen
 		int[]GrosseStrasse1 = {0,1,1,1,1,1,0};
 		int[]GrosseStrasse2 = {0,0,1,1,1,1,1};
 		if(Arrays.equals(GrosseStrasse1, Dice.getCountingArray()) || Arrays.equals(GrosseStrasse2, Dice.getCountingArray())) {

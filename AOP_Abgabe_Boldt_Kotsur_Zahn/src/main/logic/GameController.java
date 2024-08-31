@@ -14,6 +14,7 @@ public class GameController {
 	private static int winnerPoints = 1000;
 	private static String winnerName = "yupiiiiiiii";
 	
+	//Initialisiert Spiel
 	public static void initGame(String[] names, int numberOfPlayers) {
 		gameOver = false; 
 		GameController.numberOfPlayers = numberOfPlayers;
@@ -31,6 +32,7 @@ public class GameController {
 		Points.init(numberOfPlayers, 0);
 	}
 	
+	//updatet currentPlayer und gibt Index zurück
 	public static int nextPlayer() {
 		int index = currentPlayer.getPlayerIndex();
 

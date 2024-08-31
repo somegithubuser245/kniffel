@@ -37,8 +37,7 @@ public class Dice {
 	}
 	
 	public static void startComboChecker() {
-		//berchne Punkte von jeder KLasse muss aufgerufen werden
-		// Instanzen der Subklassen erstellen
+		
 		System.out.println("combochecker wird gestartet");
 	    Combos einser = new Einser();
 	    Combos zweier = new Zweier();
@@ -62,10 +61,6 @@ public class Dice {
 	    	combo.calculatePoints();
 	    }
 	}
-	
-	
-	
-	
 	
 	//Getter/Setter
 	public static int updateSum() {

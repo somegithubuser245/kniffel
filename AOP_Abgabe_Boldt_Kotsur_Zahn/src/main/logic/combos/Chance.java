@@ -11,6 +11,7 @@ public class Chance extends Combos{
 
 	@Override 
 	public void calculatePoints() {
+		//Addiert alle Aufgenzahlen
 		int result = Dice.getSum();
 		System.out.println("Combo: Chance mit "+result+" Punkten");
 

@@ -10,6 +10,7 @@ public class Kniffel extends Combos{
 
 	@Override
 	public void calculatePoints() {
+		//Prüft auf Häufigkeit 5
 		if(transformedToList().contains(5)) {
 			System.out.println("Combo: Kniffel<3 mit 50 Punkten");
 			possibleComboPoints.put(getComboName(), 50);

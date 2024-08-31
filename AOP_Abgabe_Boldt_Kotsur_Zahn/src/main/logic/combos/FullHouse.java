@@ -10,6 +10,7 @@ public class FullHouse extends Combos{
 
 	@Override
 	public void calculatePoints() {
+		// Prüft auf Häufigkeiten 2 und 3
 		if(transformedToList().contains(2) && transformedToList().contains(3)) {
 			System.out.println("Combo: Full-House mit 25 Punkten");
 			possibleComboPoints.put(getComboName(), 25);
